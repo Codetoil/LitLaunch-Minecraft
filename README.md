@@ -1,5 +1,5 @@
 # tpsmodsrc
-This is the source to the TPS Mod. This is currently only the dev source, sorry! Once the new update is released, I may be able to have a special branch for non-dev. That's for later!
+This is the source to the TPS Mod. This is currently only the dev source, sorry! Once the new update is released, I may be able to have a special branch for non-dev. That's for later though!
 
 ## development info
 To install, put this into the src folder of a brand new 1.7, 1.8, 1.12, or 1.13 workspace. You will see compile errors, and that's because a 1.7, 1.8, 1.12, and 1.13 "mod" is enabled by default. Them importing unknown classes to versions other than the intended one causes the problem.
