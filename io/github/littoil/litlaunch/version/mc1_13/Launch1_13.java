@@ -6,13 +6,13 @@ import io.github.littoil.litlaunch.launchcommon.proxy.CommonServerProxy;
 import io.github.littoil.litlaunch.launchforge.LaunchForge;
 import io.github.littoil.tpsmod.TPSMod;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 @Mod(Launch1_13.MODID)
 public class Launch1_13 extends LaunchForge<FMLCommonSetupEvent, Object, Object, FMLServerStartingEvent> {
@@ -22,7 +22,7 @@ public class Launch1_13 extends LaunchForge<FMLCommonSetupEvent, Object, Object,
     public Launch1_13()
     {
     	LaunchCommon.VERSION = VERSION;
-    	Dist dist = FMLEnvironment.dist;
+    	Dist dist = net.minecraftforge.fml.loading.FMLEnvironment.dist;
     	switch (dist)
     	{
     	case CLIENT:
@@ -35,17 +35,25 @@ public class Launch1_13 extends LaunchForge<FMLCommonSetupEvent, Object, Object,
     		LOGGER.error("FML is not disted(client vs server). This may not go well!");
     		break;
     	}
-    	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit1_13);
-    	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInitClient);
-    	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverLoad1_13);
+    	try {
+    		FMLJavaModLoadingContext jmlc = FMLJavaModLoadingContext.get();
+        	IEventBus modeb = jmlc.getModEventBus();
+        	modeb.addListener(this::setup);
+        	modeb.addListener(this::setupClient);
+        	modeb.addListener(this::serverLoad1_13);
+        	
+    	} catch (NullPointerException e)
+    	{
+    		e.printStackTrace();
+    	}
     	super.LaunchInit();
     }
     
-	public void preInit1_13(final FMLCommonSetupEvent event) {
+    private void setup(final FMLCommonSetupEvent event) {
 		super.preInit(event);
 	}
 	
-	public void preInitClient(final FMLClientSetupEvent event) {
+	private void setupClient(final FMLClientSetupEvent event) {
 		if (tpsmod instanceof TPSMod)
 		{
 			TPSMod.commandList.forEach((command) -> {
@@ -57,16 +65,6 @@ public class Launch1_13 extends LaunchForge<FMLCommonSetupEvent, Object, Object,
 					//net.minecraftforge.client.ClientCommandHandler.instance.registerCommand(new CommandNew(command));
 			});
 		}
-	}
-
-	@Override
-	public void init(Object event) {
-		super.init(event);
-	}
-
-	@Override
-	public void postInit(Object event) {
-		super.postInit(event);
 	}
 
 	@SubscribeEvent
