@@ -63,5 +63,4 @@ The free speach statement can be overriden by Github's own rules if it has any a
 
 Thank you and have fun modding!
 
-### Discord
-https://discord.gg/XgrbTjm
+Discord: https://discord.gg/XgrbTjm
