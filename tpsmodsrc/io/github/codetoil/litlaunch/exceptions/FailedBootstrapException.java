@@ -1,6 +1,10 @@
-package io.github.codetoil.litlaunch.launchcommon.exceptions;
+/*
+ * Copyright Codetoil (c) 2019
+ */
 
-public class FailedBootstrapException extends Exception {
+package io.github.codetoil.litlaunch.exceptions;
+
+public class FailedBootstrapException extends RuntimeException {
 	public FailedBootstrapException()
 	{
 		super();

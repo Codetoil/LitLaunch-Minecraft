@@ -1,4 +1,10 @@
-package io.github.codetoil.litlaunch.launchcommon;
+/*
+ * Copyright (c) Codetoil 2019
+ */
+
+package io.github.codetoil.litlaunch.backend;
+
+import io.github.codetoil.litlaunch.api.LaunchMods;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -10,12 +16,12 @@ public class LitClassLoader {
     public void setClassLoader(ClassLoader classLoader) {
         if (this.classLoader == null)
         {
-            LaunchMods.getINSTANCE().getLOGGER().info("Setting classloader to: " + classLoader);
+            LaunchMods.info("Setting classloader to: " + classLoader);
             this.classLoader = classLoader;
         }
         else
         {
-            LaunchMods.getINSTANCE().getLOGGER().info("Classloader is final");
+            LaunchMods.info("Classloader is final");
         }
     }
 
@@ -24,14 +30,13 @@ public class LitClassLoader {
         boolean result;
         if (classLoader == null)
         {
-            LaunchMods.getINSTANCE().getLOGGER().info("ClassLoader not set!");
+            LaunchMods.info("ClassLoader not set!");
         }
         try {
             classLoader.loadClass(nameClass);
             result = true;
-        } catch (Throwable e)
+        } catch (ClassNotFoundException e)
         {
-            e.printStackTrace();
             result = false;
         }
         return result;
@@ -42,7 +47,7 @@ public class LitClassLoader {
         Class<?> classOut;
         if (classLoader == null)
         {
-            LaunchMods.getINSTANCE().getLOGGER().info("ClassLoader not set!");
+            LaunchMods.info("ClassLoader not set!");
         }
         try {
             classOut = classLoader.loadClass(className);
@@ -60,8 +65,8 @@ public class LitClassLoader {
         {
             if (methodName.equals(method.getName()))
             {
-                LaunchMods.getINSTANCE().getLOGGER().info(Arrays.asList(method.getParameterTypes()));
-                LaunchMods.getINSTANCE().getLOGGER().info(Arrays.asList(paramTypes));
+                //LaunchMods.info(Arrays.asList(method.getParameterTypes()));
+                //LaunchMods.info(Arrays.asList(paramTypes));
                 if (areClassListsEqual(method.getParameterTypes(), paramTypes))
                 {
                     return method;
@@ -73,11 +78,11 @@ public class LitClassLoader {
 
     public Constructor<?> getConstructorOfClass(Class<?> classIn, Class<?>... paramTypes)
     {
-        LaunchMods.getINSTANCE().getLOGGER().info(Arrays.asList(classIn.getConstructors()));
+        LaunchMods.info(Arrays.asList(classIn.getConstructors()));
         for (Constructor<?> constructor : classIn.getConstructors())
         {
-            LaunchMods.getINSTANCE().getLOGGER().info(Arrays.asList(constructor.getParameterTypes()));
-            LaunchMods.getINSTANCE().getLOGGER().info(Arrays.asList(paramTypes));
+            //LaunchMods.info(Arrays.asList(constructor.getParameterTypes()));
+            //LaunchMods.info(Arrays.asList(paramTypes));
             if (areClassListsEqual(constructor.getParameterTypes(), paramTypes))
             {
                 return constructor;

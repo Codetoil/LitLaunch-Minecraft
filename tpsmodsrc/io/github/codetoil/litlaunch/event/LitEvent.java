@@ -1,6 +1,10 @@
-package io.github.codetoil.litlaunch.launchcommon.events;
+/*
+ * Copyright (c) Codetoil 2019
+ */
 
-import io.github.codetoil.litlaunch.launchcommon.LaunchMods;
+package io.github.codetoil.litlaunch.event;
+
+import io.github.codetoil.litlaunch.api.LaunchMods;
 
 import java.util.Arrays;
 import java.util.EventObject;
@@ -28,7 +32,7 @@ public class LitEvent extends EventObject {
         }
         else
         {
-            LaunchMods.getINSTANCE().getLOGGER().warn("Cannot set data of LitEvent again");
+            LaunchMods.warn("Cannot set data of LitEvent again");
         }
     }
 
@@ -39,7 +43,7 @@ public class LitEvent extends EventObject {
         }
         else
         {
-            LaunchMods.getINSTANCE().getLOGGER().warn("Cannot set type of LitEvent again");
+            LaunchMods.warn("Cannot set type of LitEvent again");
         }
     }
 

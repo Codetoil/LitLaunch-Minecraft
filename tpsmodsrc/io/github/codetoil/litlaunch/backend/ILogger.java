@@ -1,4 +1,8 @@
-package io.github.codetoil.litlaunch.launchcommon;
+/*
+ * Copyright (c) Codetoil 2019
+ */
+
+package io.github.codetoil.litlaunch.backend;
 
 public interface ILogger {
 	void debug(Object obj);

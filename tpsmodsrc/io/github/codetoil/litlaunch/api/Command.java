@@ -1,4 +1,8 @@
-package io.github.codetoil.litlaunch.launchcommon;
+/*
+ * Copyright (c) Codetoil 2019
+ */
+
+package io.github.codetoil.litlaunch.api;
 
 public class Command {
 	public Command() {}
