@@ -4,28 +4,28 @@
 
 package io.github.codetoil.litlaunch.core;
 
-import io.github.codetoil.litlaunch.api.FrontEnd;
-import io.github.codetoil.litlaunch.core.exceptions.FailedBootstrapException;
+import io.github.codetoil.litlaunch.api.LitLaunch;
+import io.github.codetoil.litlaunch.api.exception.FailedBootstrapException;
 
 import java.io.*;
 import java.util.Properties;
 
 public class ConfigFile {
     public static boolean readConfig(File configFile) throws IOException {
-        FrontEnd.trace("Reading config file!");
+        LitLaunch.getLogger().trace("Reading config file!");
         boolean result = false;
         if (configFile.exists()) {
             Properties lProperties = new Properties();
             InputStream ioInp = new FileInputStream(configFile);
             lProperties.load(ioInp);
             String verbose = lProperties.getProperty("verbose");
-            FrontEnd.trace("Verbose option: " + verbose);
-            boolean lV = Boolean.valueOf(verbose);
-            FrontEnd.trace("Verbose boolean: " + lV);
+            LitLaunch.getLogger().trace("Verbose option: " + verbose);
+            boolean lV = Boolean.parseBoolean(verbose);
+            LitLaunch.getLogger().trace("Verbose boolean: " + lV);
             LaunchCommon.setVerbose(lV);
-            FrontEnd.trace("LaunchCommon verbose: " + LaunchCommon.isVerbose());
+            LitLaunch.getLogger().trace("LaunchCommon verbose: " + LaunchCommon.isVerbose());
         } else {
-            FrontEnd.error("No config file! Creating new config file!");
+            LitLaunch.getLogger().error("No config file! Creating new config file!");
             setDefaultConfigFile(configFile);
         }
         return result;

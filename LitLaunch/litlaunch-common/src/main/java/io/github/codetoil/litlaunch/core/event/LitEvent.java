@@ -4,14 +4,23 @@
 
 package io.github.codetoil.litlaunch.core.event;
 
-import io.github.codetoil.litlaunch.api.FrontEnd;
+import io.github.codetoil.litlaunch.api.LitLaunch;
+import io.github.codetoil.litlaunch.api.event.ILitEvent;
 
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LitEvent extends EventObject {
-    private TYPE type;
+public class LitEvent extends EventObject implements ILitEvent {
+    public static void init() {
+        try {
+            LitLaunch.getConstructorMap().supply(ILitEvent.class, LitEvent.class, Object.class, TYPE.class, Map.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ILitEvent.TYPE type;
     private Map<String, Object> data;
 
     //Used for invoking with strings
@@ -19,14 +28,14 @@ public class LitEvent extends EventObject {
         super(source);
     }
 
-    public LitEvent(Object source, TYPE type, Map<String, Object> data) {
+    public LitEvent(Object source, ILitEvent.TYPE type, Map<String, Object> data) {
         super(source);
         this.type = type;
         this.data = data;
     }
 
     @Deprecated
-    public LitEvent(Object source, TYPE type, Object... data) {
+    public LitEvent(Object source, ILitEvent.TYPE type, Object... data) {
         super(source);
         this.type = type;
         this.data = new HashMap<>();
@@ -35,15 +44,15 @@ public class LitEvent extends EventObject {
         }
     }
 
-    public TYPE getType() {
+    public ILitEvent.TYPE getType() {
         return this.type;
     }
 
-    public void setType(TYPE type) {
+    public void setType(ILitEvent.TYPE type) {
         if (this.type == null) {
             this.type = type;
         } else {
-            FrontEnd.warn("Cannot set type of LitEvent again");
+            LitLaunch.getLogger().warn("Cannot set type of LitEvent again");
         }
     }
 
@@ -60,7 +69,7 @@ public class LitEvent extends EventObject {
         if (this.data == null) {
             this.data = data;
         } else {
-            FrontEnd.warn("Cannot set data of LitEvent again");
+            LitLaunch.getLogger().warn("Cannot set data of LitEvent again");
         }
     }
 
@@ -69,44 +78,5 @@ public class LitEvent extends EventObject {
         return "LitEvent{type=\"" + type + ",data=\"" + data + ",source=\"" + source + "\"}";
     }
 
-    public static class TYPE {
-        public static final TYPE DISCONNECT = getEnumFromString("Disconnect");
-        private static Map<String, TYPE> types = new HashMap<>();
-        public static final TYPE CONSTRUCTION = getEnumFromString("Contruction");
-        public static final TYPE PREINIT = getEnumFromString("PreInit");
-        public static final TYPE INIT = getEnumFromString("Init");
-        public static final TYPE POSTINIT = getEnumFromString("PostInit");
-        public static final TYPE TESTSPAM = getEnumFromString("TestSpam");
-        public static final TYPE SERVERLOAD = getEnumFromString("ServerLoad");
-        public static final TYPE SERVERCONNECT = getEnumFromString("ServerConnect");
-        public static final TYPE CLIENTTICK = getEnumFromString("clientTick");
-        public static final TYPE SERVERTICK = getEnumFromString("serverTick");
-        public static final TYPE ONPACKET = getEnumFromString("onPacket");
-        private final String name;
 
-        private TYPE(String name) {
-            this.name = name;
-        }
-
-        public static TYPE getEnumFromString(String name) {
-            if (types == null) {
-                types = new HashMap<>();
-            }
-            TYPE type = types.get(name);
-            if (type == null) {
-                type = new TYPE(name);
-                types.put(name, type);
-            }
-            return type;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public String toString() {
-            return "enum TYPE{name=" + name + "}";
-        }
-    }
 }

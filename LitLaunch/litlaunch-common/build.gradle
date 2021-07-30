@@ -1,0 +1,14 @@
+Object api
+try {
+    api = project.parent.findProject(":LitLaunch:litlaunch-api")
+} catch (Exception ignore) {}
+try {
+    api = (api != null ? api : project(":..:LitLaunch:litlaunch-api"))
+} catch (Exception ignore) {}
+api = (api != null ? api : project(":litlaunch-api"))
+
+archivesBaseName = litlaunchId + "-common"
+
+dependencies {
+    compile api
+}

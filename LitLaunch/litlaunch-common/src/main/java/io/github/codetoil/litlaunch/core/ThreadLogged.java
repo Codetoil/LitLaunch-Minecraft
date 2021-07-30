@@ -4,7 +4,7 @@
 
 package io.github.codetoil.litlaunch.core;
 
-import io.github.codetoil.litlaunch.api.FrontEnd;
+import io.github.codetoil.litlaunch.api.LitLaunch;
 
 public abstract class ThreadLogged extends Thread {
 
@@ -37,7 +37,7 @@ public abstract class ThreadLogged extends Thread {
     }
 
     private void printExitThreadMessage() {
-        FrontEnd.debug("Exiting the " + this.name + " Thread");
+        LitLaunch.getLogger().debug("Exiting the " + this.name + " Thread");
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class ThreadLogged extends Thread {
      * @param t the throwable that was thrown
      */
     private void printExitThreadDueToExceptionMessage(Throwable t) {
-        FrontEnd.error("Exiting the " + this.getName() + " Thread due to Throwable " + t.toString());
+        LitLaunch.getLogger().error("Exiting the " + this.getName() + " Thread due to Throwable " + t.toString());
         t.printStackTrace();
     }
 
@@ -63,7 +63,7 @@ public abstract class ThreadLogged extends Thread {
      * Creates the Starting Thread Message.
      */
     public void logThread() {
-        FrontEnd.debug("Starting the " + this.name + " Thread");
+        LitLaunch.getLogger().debug("Starting the " + this.name + " Thread");
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class ThreadLogged extends Thread {
         try {
             runCode();
         } catch (ThreadInterrupedException e) {
-            FrontEnd.debug("Interruped, Exiting Thread");
+            LitLaunch.getLogger().debug("Interruped, Exiting Thread");
         } catch (Throwable t) {
             printExitThreadDueToExceptionMessage(t);
         } finally {
@@ -91,7 +91,7 @@ public abstract class ThreadLogged extends Thread {
         throw new ThreadInterrupedException("Exiting thread");
     }
 
-    public class ThreadInterrupedException extends RuntimeException {
+    public static class ThreadInterrupedException extends RuntimeException {
         public ThreadInterrupedException() {
             this("Interruped Thread");
         }

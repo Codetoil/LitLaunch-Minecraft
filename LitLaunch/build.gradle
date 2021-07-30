@@ -1,6 +1,20 @@
 buildscript {
     repositories {
+        mavenCentral()
+        mavenLocal()
         jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
     }
 
     dependencies {
@@ -12,9 +26,6 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'com.github.johnrengelman.shadow'
-
-    group = project.litlaunchGroup
-    version = project.litlaunchVersion
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
@@ -29,23 +40,6 @@ subprojects {
         compileOnly 'net.sf.jopt-simple:jopt-simple:5.0.4'
     }
 
-    if (!it.name.startsWith("litlaunch-common") && !it.name.startsWith("tpsmodsrc")) {
-        configurations {
-            // configuration that holds jars to include in the jar
-            extraLibs
-        }
-
-        dependencies {
-            testCompile project(":litlaunch-common")
-            extraLibs project(":litlaunch-common")
-            configurations.compile.extendsFrom(configurations.extraLibs)
-        }
-
-        jar {
-            from {
-                configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
-            }
-
-        }
-    }
+    version = litlaunchVersion
+    group = litlaunchGroup
 }

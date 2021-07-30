@@ -4,13 +4,14 @@
 
 package io.github.codetoil.litlaunch.modloader;
 
-import io.github.codetoil.litlaunch.api.FrontEnd;
+import io.github.codetoil.litlaunch.api.LitLaunch;
+import io.github.codetoil.litlaunch.api.internal.ILitClassLoader;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public class LitClassLoader {
+public class LitClassLoader implements ILitClassLoader {
     private ClassLoader classLoader;
 
     public ClassLoader getClassLoader() {
@@ -19,17 +20,17 @@ public class LitClassLoader {
 
     public void setClassLoader(ClassLoader classLoader) {
         if (this.classLoader == null) {
-            FrontEnd.info("Setting classloader to: " + classLoader);
+            LitLaunch.getLogger().info("Setting classloader to: " + classLoader);
             this.classLoader = classLoader;
         } else {
-            FrontEnd.info("Classloader is final");
+            LitLaunch.getLogger().error("Classloader is final");
         }
     }
 
     public boolean classExists(String nameClass) {
         boolean result;
         if (classLoader == null) {
-            FrontEnd.error("ClassLoader not set!");
+            LitLaunch.getLogger().error("ClassLoader not set!");
             return false;
         }
         try {
@@ -44,7 +45,7 @@ public class LitClassLoader {
     public Class<?> getClass(String className) {
         Class<?> classOut;
         if (classLoader == null) {
-            FrontEnd.error("ClassLoader not set!");
+            LitLaunch.getLogger().error("ClassLoader not set!");
             return null;
         }
         try {
@@ -58,8 +59,8 @@ public class LitClassLoader {
 
     public Method getMethodOfClass(Class<?> classIn, String methodName, Class<?>... paramTypes) {
         for (Method method : classIn.getMethods()) {
-            FrontEnd.trace(method);
-            FrontEnd.trace(method.getName());
+            LitLaunch.getLogger().trace(method);
+            LitLaunch.getLogger().trace(method.getName());
             if (methodName.equals(method.getName()) && areClassListsEqual(method.getParameterTypes(), paramTypes)) {
                 return method;
             }
@@ -80,7 +81,7 @@ public class LitClassLoader {
     }
 
     public Constructor<?> getConstructorOfClass(Class<?> classIn, Class<?>... paramTypes) {
-        FrontEnd.info(Arrays.asList(classIn.getConstructors()));
+        LitLaunch.getLogger().info(Arrays.asList(classIn.getConstructors()));
         for (Constructor<?> constructor : classIn.getConstructors()) {
             //LaunchMods.info(Arrays.asList(constructor.getParameterTypes()));
             //LaunchMods.info(Arrays.asList(paramTypes));
