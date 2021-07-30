@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) Codetoil 2019
+ */
+
+package io.github.codetoil.litlaunch.api;
+
+import java.util.List;
+
+public interface IMod {
+    EnumRequireOrNot onClient();
+
+    EnumRequireOrNot onServer();
+
+    String getModID();
+
+    String getVersion();
+
+    List<Command> getCommandList();
+
+    void construction();
+
+    void preInit();
+
+    void init();
+
+    void postInit();
+
+    void serverLoad();
+
+    default IMod getModINSTANCE() {
+        return this;
+    }
+}

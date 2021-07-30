@@ -1,34 +1,16 @@
-# LitLaunch Source
-This is the source to the LitLaunch ModLoader, and the TPSMod too (lol).
+# LitLaunch
+This is the source to the LitLaunch ModLoader.
 
-v1.2 of TPSMod is included in the LitLaunch/tpsmodsrc-1.2/main folder. 
+This is a custom abstraction layer I have been working on, it lets the same mod code to run on many different versions of minecraft and in the future other modloaders, for mostly version-independant mods. I have used it for TPSMod.
 
-#### TODO add \.gitignore-s so that I don't have to wait so long.
+Note: This does not mean that the api does not change, it will and has changed. This just simply means that the mod designed for a LitLaunch version will support all the modloader and minecraft versions the version of LitLaunch supports.
 
 ### Installing development enviorment
-Simple `git clone` the repo!
-
-You may have to modify some of the build.gradle(s) so that the build doesn't reference D:/ and C:/
+Simple! `git clone` the repository!
 
 ## Pull request format and acceptability
 
-Once reviewed, the pull request might be accepted or declined based on whether the code is with the rules of the mod.
-
-### the rules of the mod
-
--Don't change the code to:
-
--harm someone
-
--harm a group of people
-
--harm the public
-	
--Don't change the code to give yourself an advantage over someone else in any way. I'm not making this mod a hacked client!
-
--All changes in the code must not change anything gameplaywise. Again, I'm not making this mod a hacked client!
-
-#### This is not an inclusive list and I may have rules not written down here.
+It is up to the creator, Codetoil, on whether a PR gets accepted.
 
 ### Free speech - But keep on topic.
 In the discussion pages, you may speak whatever you want, as long as it complies to the topic. This allows for naughty language in the discussion pages. People who are off topic may be punished though, so stay on topic!

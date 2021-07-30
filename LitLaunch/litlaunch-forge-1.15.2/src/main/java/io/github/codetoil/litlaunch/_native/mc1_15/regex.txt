@@ -1,3 +1,0 @@
-'\(S[A-z]* s[A-z]*\)' -> '\($1 packetIn\)'
-'\"handle' -> '\"'
-'netHandlerOriginal\.(handle[A-z]*)\(packetIn\);\n    }' -> 'netHandlerOriginal\.$1\(packetIn\);\n\t\tsendClientEvent\(\"$1\", packetIn\);\n    }'

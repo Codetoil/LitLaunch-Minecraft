@@ -4,30 +4,29 @@
 
 package io.github.codetoil.litlaunch.core;
 
-import io.github.codetoil.litlaunch.api.ChainableMap;
-import io.github.codetoil.litlaunch.api.Command;
-import io.github.codetoil.litlaunch.api.IDoThing;
-import io.github.codetoil.litlaunch.api.IGetFields;
+import io.github.codetoil.litlaunch.api.*;
+import io.github.codetoil.litlaunch.api.event.ILitEvent;
+import io.github.codetoil.litlaunch.api.internal.ICommonProxy;
+import io.github.codetoil.litlaunch.core.event.EventPrinter;
 import io.github.codetoil.litlaunch.core.event.LitEvent;
 import io.github.codetoil.litlaunch.core.event.LitEventHandler;
 import io.github.codetoil.litlaunch.modloader.ModFinder;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public abstract class LaunchCommon {
     public static final String NAME = "LitLaunch";
     @Deprecated
-    public static final String VERSION = "0.0.4.0";
+    public static final String VERSIONF = "0.0.4.2";
     public static final String MODID = "litlaunch";
     public static final ChainableMap<String, Object> EMPTY = new ChainableMap<>();
-    private static CommonProxy ccproxy;
-    private static IGetFields getFields;
-    private static IDoThing doThing;
+    public static String VERSION = VERSIONF;
+    private static ICommonProxy ccproxy;
     private static Boolean verbose;
     private static double timeInit;
     private static Command.Side side;
-    private static ILogger LOGGER;
     private static Path GamePath;
 
     public static double getTimeInit() {
@@ -40,24 +39,24 @@ public abstract class LaunchCommon {
         }
     }
 
-    public static IGetFields getGetFields() {
-        return getFields;
+    public static IGetLitLaunchFields getFrontEnd() {
+        return LitLaunch.getLitLaunchFields();
     }
 
-    public static void setGetFields(IGetFields getFields) {
-        if (LaunchCommon.getFields == null) {
-            LaunchCommon.getFields = getFields;
-        }
+    public static IGetMinecraftFields getGetFields() {
+        return LitLaunch.getMinecraftFields();
     }
 
-    public static IDoThing getDoThing() {
-        return doThing;
+    public static void setGetFields(IGetMinecraftFields getFields) throws IllegalAccessException {
+        LitLaunch.getInstance().setMinecraftFields(getFields);
     }
 
-    public static void setDoThing(IDoThing pDoThing) {
-        if (LaunchCommon.doThing == null) {
-            LaunchCommon.doThing = pDoThing;
-        }
+    public static IPreformMinecraftAction getDoThing() {
+        return LitLaunch.getPreformMinecraftAction();
+    }
+
+    public static void setDoThing(IPreformMinecraftAction pDoThing) throws IllegalAccessException {
+        LitLaunch.getInstance().setPreformMinecraftAction(pDoThing);
     }
 
     public static Command.Side getSide() {
@@ -70,19 +69,27 @@ public abstract class LaunchCommon {
         }
     }
 
-    public static void bootstrap(Object logger, ILaunch launch, ILogger iLogger) throws Throwable {
-        timeInit = getTimeInSeconds();
-        // Required to make it so that time is readable in a specific way
-        // It is time 0 in the clock timer thing, the origin for measuring time.
-        // Change in time = (clock time final - time origin) - (clock time initial - time origin)
-        // time origin could be 0, but I rather it not be...
-
+    public static void bootstrap(Object logger, ClassLoader classloader, INativeLaunch launch, ILogger iLogger) throws Throwable {
         //Inserting the logger to the logger wrapper!
         setLOGGER(iLogger);
         getLOGGER().setInternalLogger(logger);
 
         //main bootstrap
         info("Preforming LitLaunch Bootstrap!");
+        // Required to make it so that time is readable in a specific way
+        // It is time 0 in the clock timer thing, the origin for measuring time.
+        // Change in time = (clock time final - time origin) - (clock time initial - time origin)
+        // time origin could be 0, but I rather it not be...
+        timeInit = getTimeInSeconds();
+        info("Setting up API");
+        IGetLitLaunchFields frontEnd = new GetLitLaunchFields();
+        IConstructorMap constructors = new LitConstructorMap();
+        LitLaunch.getInstance().setLitLaunchFields(frontEnd);
+        LitLaunch.getInstance().setConstructorMap(constructors);
+        LitEvent.init();
+        LitEventHandler.init();
+
+        info("Initializing Proxies");
         try {
             if (launch.setProxy()) {
                 debug("Set Proxies");
@@ -92,11 +99,17 @@ public abstract class LaunchCommon {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        getCcproxy().setGamePath();
+        getCCproxy().setGamePath();
         info("Locating config file!");
         File litlaunchCFG = getGamePath().resolve("config/litlaunch.cfg").toFile();
         info("Reading config file for mods and settings...");
         ConfigFile.readConfig(litlaunchCFG);
+        debug("verbose: " + isVerbose());
+        if (isVerbose()) {
+            warn("Warning: You have decided for LitLaunch to be verbose! You will see lots of debug messages. You can disable this in the config file.");
+        }
+        info("Setting classloader!");
+        LitLaunch.getLitLaunchFields().classLoader().setClassLoader(classloader);
         info("Finding and validating mods!");
         ModFinder.locateMods(LaunchCommon.getGamePath().resolve("mods_litlaunch"));
         ModFinder.locateMods(LaunchCommon.getGamePath().resolve("mods"));
@@ -104,12 +117,15 @@ public abstract class LaunchCommon {
         info("Now Garbage Collecting!");
         System.gc();
         info("Done! Now sending construction event!");
-        debug("verbose: " + isVerbose());
-        if (isVerbose()) {
-            warn("Warning: You have decided for LitLaunch to be verbose! If you did not intend for this to be verbose, Make sure to change the config file. You will see a spam of debug messages under \"trace\".");
+        if (LitLaunch.getLitLaunchFields().isVerbose()) {
+            try {
+                new EventPrinter();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.CONSTRUCTION, EMPTY));
-        getCcproxy().construction();
+        getCCproxy().construction();
     }
 
     public static double getTimeInSeconds() {
@@ -117,13 +133,11 @@ public abstract class LaunchCommon {
     }
 
     public static ILogger getLOGGER() {
-        return LOGGER;
+        return LitLaunch.getLogger();
     }
 
-    public static void setLOGGER(ILogger pILogger) {
-        if (LOGGER == null) {
-            LOGGER = pILogger;
-        }
+    public static void setLOGGER(ILogger pILogger) throws IllegalAccessException {
+        LitLaunch.getInstance().setLogger(pILogger);
     }
 
     public static void info(Object object) {
@@ -138,11 +152,11 @@ public abstract class LaunchCommon {
         getLOGGER().error(object);
     }
 
-    public static CommonProxy getCcproxy() {
+    public static ICommonProxy getCCproxy() {
         return ccproxy;
     }
 
-    public static void setCcproxy(CommonProxy ccproxy) {
+    public static void setCcproxy(ICommonProxy ccproxy) {
         if (LaunchCommon.ccproxy == null) {
             LaunchCommon.ccproxy = ccproxy;
         } else {
@@ -154,37 +168,37 @@ public abstract class LaunchCommon {
         return GamePath;
     }
 
+    public static void setGamePath(Path pGamePath) {
+        GamePath = pGamePath;
+    }
+
     public static Boolean isVerbose() {
-        return verbose == null ? false : verbose;
+        return verbose != null && verbose;
     }
 
     public static void warn(Object object) {
         getLOGGER().warn(object);
     }
 
-    public static void setGamePath(Path pGamePath) {
-        GamePath = pGamePath;
-    }
-
     public static void preInit() {
-        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.PREINIT, EMPTY));
-        getCcproxy().preInit();
+        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, ILitEvent.TYPE.PREINIT, EMPTY));
+        getCCproxy().preInit();
     }
 
     public static void init() {
-        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.INIT, EMPTY));
-        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.TESTSPAM, EMPTY), true);
-        getCcproxy().init();
+        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, ILitEvent.TYPE.INIT, EMPTY));
+        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, ILitEvent.TYPE.TESTSPAM, EMPTY), true);
+        getCCproxy().init();
     }
 
     public static void postInit() {
-        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.POSTINIT, EMPTY));
-        getCcproxy().postInit();
+        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, ILitEvent.TYPE.POSTINIT, EMPTY));
+        getCCproxy().postInit();
     }
 
     public static void serverLoad() {
-        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, LitEvent.TYPE.SERVERLOAD, EMPTY));
-        getCcproxy().serverLoad();
+        LitEventHandler.COMMON.post(new LitEvent(LaunchCommon.class, ILitEvent.TYPE.SERVERLOAD, EMPTY));
+        getCCproxy().serverLoad();
     }
 
     public static void fatal(Object object) {

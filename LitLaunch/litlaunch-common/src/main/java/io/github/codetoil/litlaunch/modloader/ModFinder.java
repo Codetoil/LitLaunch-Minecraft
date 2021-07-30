@@ -4,11 +4,14 @@
 
 package io.github.codetoil.litlaunch.modloader;
 
+import com.google.common.reflect.ClassPath;
 import io.github.codetoil.litlaunch.api.EnumRequireOrNot;
-import io.github.codetoil.litlaunch.api.FrontEnd;
 import io.github.codetoil.litlaunch.api.IMod;
+import io.github.codetoil.litlaunch.api.LitLaunch;
+import io.github.codetoil.litlaunch.api.event.ILitEventHandler;
+import io.github.codetoil.litlaunch.api.exception.FailedBootstrapException;
+import io.github.codetoil.litlaunch.core.LaunchCommon;
 import io.github.codetoil.litlaunch.core.event.LitEventHandler;
-import io.github.codetoil.litlaunch.core.exceptions.FailedBootstrapException;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
@@ -16,10 +19,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -29,46 +29,53 @@ public class ModFinder {
     public final static List<Class<?>> validMods = new ArrayList<>();
     private final static List<String> MOD_LIST = new ArrayList<>();
 
-
     public static void locateMods(Path modsFolder) {
-        FrontEnd.info("Locating mods!");
-        FrontEnd.trace(modsFolder);
+        LitLaunch.getLogger().info("Locating mods!");
+        LitLaunch.getLogger().trace(modsFolder);
         if (modsFolder.toFile().isDirectory()) {
             File[] mods = modsFolder.toFile().listFiles();
-            FrontEnd.trace(Arrays.toString(mods));
+            LitLaunch.getLogger().trace(Arrays.toString(mods));
+            assert mods != null;
             for (File mod :
                     mods
             ) {
-                FrontEnd.trace(mod);
+                LitLaunch.getLogger().trace(mod);
                 if (mod.isFile() && mod.getName().endsWith(".jar")) {
                     testIfMod(mod);
                 }
             }
         }
+        LitLaunch.getLogger().info(litClassLoader);
+        try {
+            ClassPath.from(litClassLoader.getClassLoader());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
     }
 
     private static boolean testIfMod(File mod) {
-        FrontEnd.debug("testing mod " + mod);
+        LitLaunch.getLogger().debug("testing mod " + mod);
         boolean result = false;
         try {
             JarFile jarMod = new JarFile(mod);
             Enumeration<JarEntry> files = jarMod.entries();
             URL[] urls = {new URL("jar:file:" + mod.getAbsolutePath() + "!/")};
             URLClassLoader cl = URLClassLoader.newInstance(urls, ModFinder.class.getClassLoader());
-            FrontEnd.trace(ModFinder.class.getClassLoader());
-            FrontEnd.trace(cl);
+            LitLaunch.getLogger().trace(ModFinder.class.getClassLoader());
+            LitLaunch.getLogger().trace(cl);
             while (files.hasMoreElements()) {
                 JarEntry lEntry = files.nextElement();
-                FrontEnd.trace(lEntry);
+                LitLaunch.getLogger().trace(lEntry);
                 if (lEntry.isDirectory() || !lEntry.getName().endsWith(".class")) {
                     continue;
                 }
                 try {
                     if (testIfModClass(lEntry, cl)) {
-                        FrontEnd.trace("Found Mod Class! Yippy!");
+                        LitLaunch.getLogger().trace("Found Mod Class! Yippy!");
                     }
                 } catch (Throwable t) {
-                    FrontEnd.error("Something went wrong when testing " + lEntry + ", Skipping!");
+                    LitLaunch.getLogger().error("Something went wrong when testing " + lEntry + ", Skipping!");
                     t.printStackTrace();
                 }
             }
@@ -83,25 +90,25 @@ public class ModFinder {
         className = className.replace('/', '.');
         SoftReference<Class> c = new SoftReference<>(cl.loadClass(className));
         if (c.get() != null) {
-            Class[] interfaces = c.get().getInterfaces();
+            Class[] interfaces = Objects.requireNonNull(c.get()).getInterfaces();
             boolean isMod = false;
             boolean isListener = false;
             for (Class interface_ :
                     interfaces) {
-                FrontEnd.debug(interface_);
+                LitLaunch.getLogger().debug(interface_);
                 if (interface_.getName().equals(IMod.class.getName())) {
-                    FrontEnd.trace("Found Class That Implements IMod!!! :D");
+                    LitLaunch.getLogger().trace("Found Class That Implements IMod!!! :D");
                     isMod = true;
                 }
-                if (interface_.getName().equals(LitEventHandler.EventListener.class.getName())) {
-                    FrontEnd.trace("Found Listener Class!");
+                if (interface_.getName().equals(ILitEventHandler.IEventListener.class.getName())) {
+                    LitLaunch.getLogger().trace("Found Listener Class!");
                     isListener = true;
                 }
             }
             if (isMod && isListener) {
-                FrontEnd.trace("Mod " + c + " is a LitLaunch Mod!!");
+                LitLaunch.getLogger().trace("Mod " + c + " is a LitLaunch Mod!!");
                 ModFinder.possibilityList.add(c.get());
-                FrontEnd.trace("Added to possibility list");
+                LitLaunch.getLogger().trace("Added to possibility list");
                 return true;
             }
         }
@@ -109,7 +116,7 @@ public class ModFinder {
     }
 
     public static boolean validateMods() {
-        FrontEnd.trace("Validating mods!");
+        LitLaunch.getLogger().trace("Validating mods!");
         try {
             for (Class<?> possibility : possibilityList) {
                 try {
@@ -121,25 +128,25 @@ public class ModFinder {
                     Method getModINSTANCE = litClassLoader.getMethodOfClass(possibility, "getModINSTANCE");
                     if (getListener != null && getModINSTANCE != null) {
                         Object oListener = getListener.invoke(randomINSTANCE);
-                        if (oListener instanceof LitEventHandler.EventListener) {
+                        if (oListener instanceof ILitEventHandler.IEventListener) {
                             if (!verifySide(getModINSTANCE)) {
-                                FrontEnd.trace("Mod \"" + possibility.getName() + "\" is valid! Adding to valid mod list and adding listener!");
+                                LitLaunch.getLogger().trace("Mod \"" + possibility.getName() + "\" is valid! Adding to valid mod list and adding listener!");
                                 validMods.add(possibility);
                                 // Step 2a : Convert oListener to EventListener class
-                                LitEventHandler.EventListener lListener = (LitEventHandler.EventListener) oListener;
+                                ILitEventHandler.IEventListener lListener = (ILitEventHandler.IEventListener) oListener;
                                 // Step 3 : Add the event listener!
                                 LitEventHandler.COMMON.addListener(lListener);
                             } else {
-                                FrontEnd.trace("Mod \"" + possibility.getName() + "\" does not work on the given side, and will not load! Skipping!");
+                                LitLaunch.getLogger().trace("Mod \"" + possibility.getName() + "\" does not work on the given side, and will not load! Skipping!");
                             }
                         } else {
-                            FrontEnd.error("Mod \"" + possibility.getName() + "\" does not implement LitEventHandler.EventListener, and such cannot be loaded. Skipping Mod!");
+                            LitLaunch.getLogger().error("Mod \"" + possibility.getName() + "\" does not implement LitEventHandler.EventListener, and such cannot be loaded. Skipping Mod!");
                         }
                     } else {
-                        FrontEnd.error("Failed initializing Mod \"" + possibility.getName() + "\" because required methods cannot be located. Skipping it!");
+                        LitLaunch.getLogger().error("Failed initializing Mod \"" + possibility.getName() + "\" because required methods cannot be located. Skipping it!");
                     }
                 } catch (InstantiationException | NoSuchMethodError t) {
-                    FrontEnd.error("Failed initializing Mod \"" + possibility.getName() + "\" due to an InstantationException or NoSuchMethodError! Skipping Mod!");
+                    LitLaunch.getLogger().error("Failed initializing Mod \"" + possibility.getName() + "\" due to an InstantationException or NoSuchMethodError! Skipping Mod!");
                 }
 
             }
@@ -153,7 +160,7 @@ public class ModFinder {
     private static boolean verifySide(Object object) {
         if (object instanceof IMod) {
             IMod mod = (IMod) object;
-            switch (FrontEnd.getSide()) {
+            switch (LaunchCommon.getFrontEnd().getSide()) {
                 case BOTH:
                 case CLIENT:
                     return !mod.onClient().equals(EnumRequireOrNot.INCOMPATIBLE);

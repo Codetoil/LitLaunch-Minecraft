@@ -1,0 +1,5 @@
+.gradle
+build
+forge_run/build
+forge_run/run
+local.properties
