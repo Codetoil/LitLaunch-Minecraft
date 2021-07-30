@@ -1,0 +1,5 @@
+include ':LitLaunch',':LitLaunch:litlaunch-common',':LitLaunch:litlaunch-api',':litlaunch-forge-1.12.2',':litlaunch-forge-1.14.4',':litlaunch-forge-1.15.2',':litlaunch-forge-1.16.5'
+
+project(":LitLaunch:litlaunch-api").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-api").toFile()
+project(":LitLaunch:litlaunch-common").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-common").toFile()
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()

@@ -1,0 +1,1 @@
+include ':..:LitLaunch',':..:LitLaunch:litlaunch-common',':..:LitLaunch:litlaunch-api',':litlaunch-forge-1.7.10',':litlaunch-forge-1.8.9'

@@ -1,0 +1,141 @@
+import groovy.util.Eval
+
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
+    }
+}
+
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url = "https://www.cursemaven.com"
+        }
+    }
+
+    version = modVersion
+    group = modGroup
+    archivesBaseName = modBaseName
+
+    dependencies {
+        java.nio.file.Path thisDir = rootProject.projectDir.toPath();
+        if (thisDir.resolveSibling("LitLaunch/litlaunch-api/build/libs/litlaunch-api-${litlaunchVersion}.jar").toFile().exists())
+        {
+            compileOnly files(thisDir.resolveSibling("LitLaunch/litlaunch-api/build/libs/litlaunch-api-${litlaunchVersion}.jar").toString())
+            runtimeOnly files(thisDir.resolveSibling("LitLaunch-Gradle-6.8.1/litlaunch-forge-1.12.2/build/libs/litlaunch-forge-1.12.2-${litlaunchVersion}.jar").toString())
+        }
+        else {
+            /*
+            * Change this to the litlaunch version you want:
+            * version: api, forge-1.12.2
+            * 0.0.4.1: 2961048, 2961053
+            * 0.0.4.2: 3406077, 3406078
+            * */
+            compileOnly "curse.maven:litlaunch-api-358829:3406077"
+            runtimeOnly "curse.maven:litlaunch-forge-1.12.2-358829:3406078"
+        }
+    }
+}
+
+project(":forge_run") {
+    apply plugin: 'net.minecraftforge.gradle'
+
+    sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+    minecraft {
+        // The mappings can be changed at any time, and must be in the following format.
+        // snapshot_YYYYMMDD   Snapshot are built nightly.
+        // stable_#            Stables are built at the discretion of the MCP team.
+        // Use non-default mappings at your own risk. they may not always work.
+        // Simply re-run your setup task after changing the mappings to update your workspace.
+        mappings channel: 'stable', version: '39-1.12'
+        // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+        // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+        // Default run configurations.
+        // These can be tweaked, removed, or duplicated as needed.
+        runs {
+            client {
+                workingDirectory project.file('run')
+
+                // Recommended logging data for a userdev environment
+                property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+                // Recommended logging level for the console
+                property 'forge.logging.console.level', 'trace'
+
+                if (project.hasProperty("appArgs")) {
+                    args Eval.me(appArgs as String)
+                }
+
+                mods {
+                    testforge {
+                        source sourceSets.main
+                    }
+                }
+            }
+
+            server {
+                workingDirectory project.file('run')
+
+                // Recommended logging data for a userdev environment
+                property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+                // Recommended logging level for the console
+                property 'forge.logging.console.level', 'trace'
+
+                mods {
+                    testforge {
+                        source sourceSets.main
+                    }
+                }
+            }
+        }
+    }
+
+    dependencies {
+        // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+        // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+        // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+        minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+
+    }
+}
+
+task cleanModsFolder(type: Delete) {
+    delete fileTree("$projectDir/forge_run/run/mods_litlaunch").matching {
+        include "*.jar"
+    }
+}
+
+task copyMod(type: Copy) {
+    from "$buildDir/libs"
+    include "*.jar"
+    into "$projectDir/forge_run/run/mods_litlaunch"
+}
+
+
+cleanModsFolder.finalizedBy(copyMod)
+
+def PR = project(":forge_run").getTasksByName("prepareRuns", true)[0]
+PR.setFinalizedBy(
+        [jar, cleanModsFolder]
+)
+
+dependencies {
+    //libraries
+    compileOnly 'com.google.code.gson:gson:2.8.6'
+    compileOnly 'com.google.guava:guava:22.0'
+    compileOnly 'net.sf.jopt-simple:jopt-simple:5.0.4'
+}

@@ -1,0 +1,3 @@
+rootProject.name = 'examplemod'
+
+include 'forge_run'
