@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch._native.mc1144;
 
 import io.github.codetoil.litlaunch.api.IPreformMinecraftAction;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;

@@ -6,8 +6,8 @@ package io.github.codetoil.litlaunch._native.mc189.proxy;
 
 
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.api.internal.ICommonProxy;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.api.litlaunch.ICommonProxy;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class ServerProxy189 implements ICommonProxy {

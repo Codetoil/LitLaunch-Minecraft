@@ -5,8 +5,8 @@
 package io.github.codetoil.litlaunch._native.mc189;
 
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.core.event.LitEvent;
-import io.github.codetoil.litlaunch.core.event.LitEventHandler;
+import io.github.codetoil.litlaunch.minecraft.event.LitEvent;
+import io.github.codetoil.litlaunch.minecraft.event.LitEventHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;

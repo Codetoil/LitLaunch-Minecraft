@@ -2,7 +2,7 @@ package io.github.codetoil.litlaunch._native.mc1144.proxy;
 
 
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.api.internal.ICommonProxy;
+import io.github.codetoil.litlaunch.api.litlaunch.ICommonProxy;
 
 public class ServerProxy1144 implements ICommonProxy {
     @Override

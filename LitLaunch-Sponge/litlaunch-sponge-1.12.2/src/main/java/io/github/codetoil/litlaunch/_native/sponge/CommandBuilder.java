@@ -5,7 +5,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import io.github.codetoil.litlaunch.api.Command;
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.core.GetLitLaunchFields;
+import io.github.codetoil.litlaunch.minecraft.GetLitLaunchFields;
 import io.github.codetoil.litlaunch.api.arguments.ArgumentWrapper;
 import io.github.codetoil.litlaunch.api.arguments.IArgumentParser;
 import io.github.codetoil.litlaunch.api.arguments.IArgumentValue;

@@ -10,8 +10,8 @@ import cpw.mods.fml.common.network.FMLNetworkEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.core.event.LitEvent;
-import io.github.codetoil.litlaunch.core.event.LitEventHandler;
+import io.github.codetoil.litlaunch.minecraft.event.LitEvent;
+import io.github.codetoil.litlaunch.minecraft.event.LitEventHandler;
 
 public class EventHandler {
     @SubscribeEvent

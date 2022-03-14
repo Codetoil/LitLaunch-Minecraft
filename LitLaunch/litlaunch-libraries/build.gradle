@@ -1,0 +1,15 @@
+Object litlaunchLibrariesApi
+try {
+    litlaunchLibrariesApi = project.parent.findProject(":LitLaunch:litlaunch-library-api")
+} catch (Exception ignore) {}
+try {
+    litlaunchLibrariesApi = (litlaunchLibrariesApi != null ? litlaunchLibrariesApi : project(":..:" +
+            "LitLaunch:litlaunch-library-api"))
+} catch (Exception ignore) {}
+litlaunchLibrariesApi = (litlaunchLibrariesApi != null ? litlaunchLibrariesApi : project(":litlaunch-library-api"))
+
+archivesBaseName = litlaunchId + "-libraries"
+
+dependencies {
+    api litlaunchLibrariesApi
+}

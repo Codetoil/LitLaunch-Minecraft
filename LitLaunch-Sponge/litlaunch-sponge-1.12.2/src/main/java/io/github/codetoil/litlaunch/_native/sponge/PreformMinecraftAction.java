@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch._native.sponge;
 
 import io.github.codetoil.litlaunch.api.IPreformMinecraftAction;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.*;

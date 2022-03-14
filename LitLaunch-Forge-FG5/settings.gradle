@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net"
+        }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
+        mavenLocal()
+    }
+}
+
+include ':LitLaunch',':LitLaunch:litlaunch-common',':LitLaunch:litlaunch-api',':litlaunch-forge-1.12.2',':litlaunch-forge-1.16.5'
+
+project(":LitLaunch:litlaunch-api").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-api").toFile()
+project(":LitLaunch:litlaunch-common").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-common").toFile()
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+

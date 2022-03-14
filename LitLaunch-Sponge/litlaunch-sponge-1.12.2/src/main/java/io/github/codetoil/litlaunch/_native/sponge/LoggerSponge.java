@@ -1,7 +1,7 @@
 package io.github.codetoil.litlaunch._native.sponge;
 
 import io.github.codetoil.litlaunch.api.ILogger;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import org.slf4j.Logger;
 
 public class LoggerSponge implements ILogger {
