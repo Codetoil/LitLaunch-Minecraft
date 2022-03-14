@@ -1,0 +1,85 @@
+/*
+ * Copyright (c) Codetoil 2022
+ */
+
+package io.github.codetoil.litlaunch.minecraft;
+
+import io.github.codetoil.litlaunch.api.*;
+import io.github.codetoil.litlaunch.api.litlaunch.ICommonProxy;
+import io.github.codetoil.litlaunch.api.mods.IGetLitLaunchFields;
+import io.github.codetoil.litlaunch.api.server.IMinecraftServer;
+import io.github.codetoil.litlaunch.event.LitEventHandler;
+import io.github.codetoil.litlaunch.modloader.LitClassLoader;
+import io.github.codetoil.litlaunch.modloader.ModFinder;
+
+import java.util.List;
+
+/**
+ * The front end of LitLaunch, allows to access to the api from a single class
+ */
+public class GetLitLaunchFields implements IGetLitLaunchFields
+{
+    public String litlaunchVersion() {
+        return LitLaunch.VERSION;
+    }
+
+    public String litlaunchMod() {
+        return LitLaunch.MODID;
+    }
+
+    public ChainableMap<String, Object> emptyChainableMap() {
+        return LitLaunch.EMPTY;
+    }
+
+    public String minecraftVersion() {
+        return LitLaunch.getGetFields().minecraftVersion();
+    }
+
+    public ICommonProxy activeProxy() {
+        return LitLaunch.getCCproxy();
+    }
+
+    public IMinecraftServer getFields() {
+        return LitLaunch.getGetFields();
+    }
+
+    public PreformMinecraftAction doThingObject() {
+        return LitLaunch.getDoThing();
+    }
+
+    public boolean isVerbose() {
+        return LitLaunch.isVerbose();
+    }
+
+    public double timeFrame() {
+        return LitLaunch.getTimeInit();
+    }
+
+    public Command.Side getSide() {
+        return LitLaunch.getSide();
+    }
+
+    public List<Class<?>> modsLoaded() {
+        return ModFinder.validMods;
+    }
+
+    public LitClassLoader classLoader() {
+        return ModFinder.litClassLoader;
+    }
+
+    public LitEventHandler commonEventHandler() {
+        return LitEventHandler.COMMON;
+    }
+
+    public LitEventHandler clientEventHandler() {
+        return LitEventHandler.CLIENT;
+    }
+
+    public LitEventHandler serverEventHandler() {
+        return LitEventHandler.SERVER;
+    }
+
+    public double timeSinceBootstrap() {
+        return LitLaunch.getTimeInSeconds();
+    }
+}

@@ -1,0 +1,202 @@
+/*
+ * Copyright (c) Codetoil 2022
+ */
+
+package io.github.codetoil.litlaunch.minecraft;
+
+public abstract class LitLaunch {
+    public static final String NAME = "LitLaunch";
+    @Deprecated
+    public static final String VERSIONF = "0.0.5+build.0";
+    public static final String MODID = "litlaunch";
+    public static final ChainableMap<String, Object> EMPTY = new ChainableMap<>();
+    public static String VERSION = VERSIONF;
+    private static ICommonProxy ccproxy;
+    private static Boolean verbose;
+    private static double timeInit;
+    private static Command.Side side;
+    private static Path GamePath;
+
+    public static double getTimeInit() {
+        return timeInit;
+    }
+
+    public static void setVerbose(boolean pVerbose) {
+        if (verbose == null) {
+            verbose = pVerbose;
+        }
+    }
+
+    public static IGetLitLaunchFields getFrontEnd() {
+        return io.github.codetoil.litlaunch.api.LitLaunch.getLitLaunchFields();
+    }
+
+    public static IMinecraftServer getGetFields() {
+        return io.github.codetoil.litlaunch.api.LitLaunch.getMinecraftFields();
+    }
+
+    public static void setGetFields(IMinecraftServer getFields) throws IllegalAccessException {
+        io.github.codetoil.litlaunch.api.LitLaunch.getInstance().setMinecraftFields(getFields);
+    }
+
+    public static PreformMinecraftAction getDoThing() {
+        return io.github.codetoil.litlaunch.api.LitLaunch.getPreformMinecraftAction();
+    }
+
+    public static void setDoThing(PreformMinecraftAction pDoThing) throws IllegalAccessException {
+        io.github.codetoil.litlaunch.api.LitLaunch.getInstance().setPreformMinecraftAction(pDoThing);
+    }
+
+    public static Command.Side getSide() {
+        return side;
+    }
+
+    public static void setSide(Command.Side side) {
+        if (LitLaunch.side == null) {
+            LitLaunch.side = side;
+        }
+    }
+
+    public static void bootstrap(Object logger, ClassLoader classloader, INativeLaunch launch, ILogger iLogger) throws Throwable {
+        //Inserting the logger to the logger wrapper!
+        setLOGGER(iLogger);
+        getLOGGER().setInternalLogger(logger);
+
+        //main bootstrap
+        info("Preforming LitLaunch Bootstrap!");
+        // Required to make it so that time is readable in a specific way
+        // It is time 0 in the clock timer thing, the origin for measuring time.
+        // Change in time = (clock time final - time origin) - (clock time initial - time origin)
+        // time origin could be 0, but I rather it not be...
+        timeInit = getTimeInSeconds();
+        info("Setting up API");
+        IGetLitLaunchFields frontEnd = new GetLitLaunchFields();
+        IConstructorMap constructors = new LitConstructorMap();
+        io.github.codetoil.litlaunch.api.LitLaunch.getInstance().setLitLaunchFields(frontEnd);
+        io.github.codetoil.litlaunch.api.LitLaunch.getInstance().setConstructorMap(constructors);
+        LitEvent.init();
+        LitEventHandler.init();
+
+        info("Initializing Proxies");
+        try {
+            if (launch.setProxy()) {
+                debug("Set Proxies");
+            } else {
+                error("Proxies not set!");
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        getCCproxy().setGamePath();
+        info("Locating config file!");
+        File litlaunchCFG = getGamePath().resolve("config/litlaunch.cfg").toFile();
+        info("Reading config file for mods and settings...");
+        ConfigFile.readConfig(litlaunchCFG);
+        debug("verbose: " + isVerbose());
+        if (isVerbose()) {
+            warn("Warning: You have decided for LitLaunch to be verbose! You will see lots of debug messages. You can disable this in the config file.");
+        }
+        info("Setting classloader!");
+        io.github.codetoil.litlaunch.api.LitLaunch.getLitLaunchFields().classLoader().setClassLoader(classloader);
+        info("Finding and validating mods!");
+        ModFinder.locateMods(LitLaunch.getGamePath().resolve("mods_litlaunch"));
+        ModFinder.locateMods(LitLaunch.getGamePath().resolve("mods"));
+        ModFinder.validateMods();
+        info("Now Garbage Collecting!");
+        System.gc();
+        info("Done! Now sending construction event!");
+        if (io.github.codetoil.litlaunch.api.LitLaunch.getLitLaunchFields().isVerbose()) {
+            try {
+                new EventPrinter();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, LitEvent.TYPE.CONSTRUCTION, EMPTY));
+        getCCproxy().construction();
+    }
+
+    public static double getTimeInSeconds() {
+        return ((double) System.currentTimeMillis()) / 1000.0 - timeInit;
+    }
+
+    public static ILogger getLOGGER() {
+        return io.github.codetoil.litlaunch.api.LitLaunch.getLogger();
+    }
+
+    public static void setLOGGER(ILogger pILogger) throws IllegalAccessException {
+        io.github.codetoil.litlaunch.api.LitLaunch.getInstance().setLogger(pILogger);
+    }
+
+    public static void info(Object object) {
+        getLOGGER().info(object);
+    }
+
+    public static void debug(Object object) {
+        getLOGGER().debug(object);
+    }
+
+    public static void error(Object object) {
+        getLOGGER().error(object);
+    }
+
+    public static ICommonProxy getCCproxy() {
+        return ccproxy;
+    }
+
+    public static void setCcproxy(ICommonProxy ccproxy) {
+        if (LitLaunch.ccproxy == null) {
+            LitLaunch.ccproxy = ccproxy;
+        } else {
+            info("CCProxy ALREADY SET");
+        }
+    }
+
+    public static Path getGamePath() {
+        return GamePath;
+    }
+
+    public static void setGamePath(Path pGamePath) {
+        GamePath = pGamePath;
+    }
+
+    public static Boolean isVerbose() {
+        return verbose != null && verbose;
+    }
+
+    public static void warn(Object object) {
+        getLOGGER().warn(object);
+    }
+
+    public static void preInit() {
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, ILitEvent.TYPE.PREINIT, EMPTY));
+        getCCproxy().preInit();
+    }
+
+    public static void init() {
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, ILitEvent.TYPE.INIT, EMPTY));
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, ILitEvent.TYPE.TESTSPAM, EMPTY), true);
+        getCCproxy().init();
+    }
+
+    public static void postInit() {
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, ILitEvent.TYPE.POSTINIT, EMPTY));
+        getCCproxy().postInit();
+    }
+
+    public static void serverLoad() {
+        LitEventHandler.COMMON.post(new LitEvent(LitLaunch.class, ILitEvent.TYPE.SERVERLOAD, EMPTY));
+        getCCproxy().serverLoad();
+    }
+
+    public static void fatal(Object object) {
+        getLOGGER().fatal(object);
+    }
+
+    public static void verbose(Object object) {
+        getLOGGER().verbose(object);
+    }
+
+    public static void trace(Object object) {
+        getLOGGER().trace(object);
+    }

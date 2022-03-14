@@ -4,9 +4,9 @@
 
 package io.github.codetoil.litlaunch._native.mc1152;
 
-import io.github.codetoil.litlaunch.core.LaunchCommon;
-import io.github.codetoil.litlaunch.core.event.LitEvent;
-import io.github.codetoil.litlaunch.core.event.LitEventHandler;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.event.LitEvent;
+import io.github.codetoil.litlaunch.minecraft.event.LitEventHandler;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

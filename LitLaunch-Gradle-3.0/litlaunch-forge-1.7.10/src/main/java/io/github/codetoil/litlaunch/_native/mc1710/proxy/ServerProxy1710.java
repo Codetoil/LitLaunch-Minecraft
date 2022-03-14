@@ -7,8 +7,8 @@ package io.github.codetoil.litlaunch._native.mc1710.proxy;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import io.github.codetoil.litlaunch.api.LitLaunch;
-import io.github.codetoil.litlaunch.api.internal.ICommonProxy;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.api.litlaunch.ICommonProxy;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 
 public class ServerProxy1710 implements ICommonProxy {
     @Override

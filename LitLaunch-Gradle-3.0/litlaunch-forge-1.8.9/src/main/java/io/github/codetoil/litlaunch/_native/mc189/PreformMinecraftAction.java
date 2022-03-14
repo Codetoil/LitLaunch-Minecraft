@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch._native.mc189;
 
 import io.github.codetoil.litlaunch.api.IPreformMinecraftAction;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;

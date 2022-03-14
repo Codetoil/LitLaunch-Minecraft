@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch._native.bukkit;
 
 import io.github.codetoil.litlaunch.api.IPreformMinecraftAction;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 
 public class PreformMinecraftAction implements IPreformMinecraftAction {
     public static final IPreformMinecraftAction INSTANCE = new PreformMinecraftAction();

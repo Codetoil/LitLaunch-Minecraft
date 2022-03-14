@@ -1,0 +1,27 @@
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+
+    configurations {
+        // configuration that holds jars to include in the jar
+        extraLibs
+    }
+
+    Object subproj = it;
+    dependencies {
+        if (!subproj.name.contains("litlaunch-common") && !subproj.name.contains("litlaunch-api")) {
+            implementation project.parent.findProject(":LitLaunch:litlaunch-common")
+            extraLibs project.parent.findProject(":LitLaunch:litlaunch-common")
+        }
+        configurations.implementation.extendsFrom(configurations.extraLibs)
+    }
+
+    jar {
+        from {
+            configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+
+    }
+
+}

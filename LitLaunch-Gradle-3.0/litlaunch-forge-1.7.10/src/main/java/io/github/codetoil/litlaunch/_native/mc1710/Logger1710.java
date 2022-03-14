@@ -6,7 +6,7 @@ package io.github.codetoil.litlaunch._native.mc1710;
 
 
 import io.github.codetoil.litlaunch.api.ILogger;
-import io.github.codetoil.litlaunch.core.LaunchCommon;
+import io.github.codetoil.litlaunch.minecraft.LaunchCommon;
 import org.apache.logging.log4j.Logger;
 
 public class Logger1710 implements ILogger {

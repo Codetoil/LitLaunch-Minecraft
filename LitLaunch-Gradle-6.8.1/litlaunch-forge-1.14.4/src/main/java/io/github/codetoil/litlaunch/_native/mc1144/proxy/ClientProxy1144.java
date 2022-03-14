@@ -11,7 +11,7 @@ import io.github.codetoil.litlaunch.api.LitLaunch;
 import io.github.codetoil.litlaunch.api.arguments.ArgumentWrapper;
 import io.github.codetoil.litlaunch.api.arguments.IArgumentParser;
 import io.github.codetoil.litlaunch.api.arguments.IArgumentValue;
-import io.github.codetoil.litlaunch.api.internal.ICommonProxy;
+import io.github.codetoil.litlaunch.api.litlaunch.ICommonProxy;
 import io.github.codetoil.litlaunch.modloader.ModFinder;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
