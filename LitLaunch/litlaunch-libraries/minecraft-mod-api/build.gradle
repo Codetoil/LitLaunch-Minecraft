@@ -1,0 +1,11 @@
+Project litlaunchLibrariesApi = toProject(project, ":litlaunch-library-api")
+Project litlaunchEventModule = toProject(project, ":litlaunch-libraries:event")
+Project litlaunchMinecraftModule = toProject(project, ":litlaunch-libraries:minecraft")
+
+archivesBaseName = litlaunchId + "-minecraft-mod-api-module"
+
+dependencies {
+    api litlaunchLibrariesApi
+    api litlaunchEventModule
+    api litlaunchMinecraftModule
+}

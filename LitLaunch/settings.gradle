@@ -26,4 +26,9 @@ pluginManagement {
     }
 }
 
-include ':litlaunch-mod-api',':litlaunch-library-api',":litlaunch-libraries"
+include ":litlaunch-library-api",":litlaunch-libraries:event",":litlaunch-libraries:minecraft",
+        ":litlaunch-libraries:minecraft-chat",":litlaunch-libraries:minecraft-client",
+        ":litlaunch-libraries:minecraft-command",":litlaunch-libraries:minecraft-dimension",
+        ":litlaunch-libraries:minecraft-config",":litlaunch-libraries:minecraft-event",
+        ":litlaunch-libraries:minecraft-server",":litlaunch-libraries:minecraft-world",
+        ":litlaunch-libraries:minecraft-mod-api"

@@ -1,0 +1,13 @@
+Project litlaunchLibrariesApi = toProject(project, ":litlaunch-library-api")
+Project litlaunchMinecraftModule = toProject(project, ":litlaunch-libraries:minecraft-mod-api")
+Project litlaunchMinecraftChatModule = toProject(project, ":litlaunch-libraries:minecraft-chat")
+Project litlaunchMinecraftDimensionModule = toProject(project, ":litlaunch-libraries:minecraft-dimension")
+
+archivesBaseName = litlaunchId + "-minecraft-world-module"
+
+dependencies {
+    api litlaunchLibrariesApi
+    api litlaunchMinecraftModule
+    api litlaunchMinecraftChatModule
+    api litlaunchMinecraftDimensionModule
+}
