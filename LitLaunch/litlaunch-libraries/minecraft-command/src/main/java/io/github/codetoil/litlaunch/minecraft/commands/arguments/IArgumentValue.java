@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch.minecraft.commands.arguments;
 
 public interface IArgumentValue<T> {
-    IArgumentParser<? extends IArgumentValue> getParser();
+    IArgumentParser<? extends IArgumentValue<T>> getParser();
 
     T getValue();
 }
