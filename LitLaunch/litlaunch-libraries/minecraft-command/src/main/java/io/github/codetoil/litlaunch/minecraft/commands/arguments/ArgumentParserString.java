@@ -4,19 +4,20 @@
 
 package io.github.codetoil.litlaunch.minecraft.commands.arguments;
 
-public class ArgumentParserString implements IArgumentParser<IArgumentValue<String>> {
+public class ArgumentParserString implements IArgumentParser<String> {
     @Override
-    public ArgumentValue<String> parse(String input) {
-        return new ArgumentValue<>(input, this);
+    public String parse(String input) {
+        return input;
     }
 
     @Override
-    public boolean isNumber() {
+    public boolean isParsedInputANumber() {
         return false;
     }
 
     @Override
-    public Class<?> getClassOfT() {
+    public Class<?> getArgumentClass()
+    {
         return String.class;
     }
 }

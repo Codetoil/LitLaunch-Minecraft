@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.Instant;
 
+@SuppressWarnings("unused")
 public class EventPrinter implements LitEventHandler.ILitEventListener
 {
     private final BufferedOutputStream outputStream;

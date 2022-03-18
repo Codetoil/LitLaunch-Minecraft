@@ -4,10 +4,10 @@
 
 package io.github.codetoil.litlaunch.minecraft.commands.arguments;
 
-public interface IArgumentParser<T extends IArgumentValue<?>> {
+public interface IArgumentParser<T> {
     T parse(String input);
 
-    boolean isNumber();
+    boolean isParsedInputANumber();
 
-    Class<?> getClassOfT();
+    Class<?> getArgumentClass();
 }

@@ -1,0 +1,7 @@
+Project litlaunchLibrariesApi = toProject(project, ":litlaunch-library-api")
+
+archivesBaseName = litlaunchId + "-config-module"
+
+dependencies {
+    api litlaunchLibrariesApi
+}
