@@ -8,19 +8,20 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class ArgumentParserListString implements IArgumentParser<IArgumentValue<List<String>>> {
+public class ArgumentParserListString implements IArgumentParser<List<String>> {
     @Override
-    public ArgumentValue<List<String>> parse(String input) {
-        return new ArgumentValue<>(Lists.newArrayList(input.split(" ")), this);
+    public List<String> parse(String input) {
+        return Lists.newArrayList(input.split(" "));
     }
 
     @Override
-    public boolean isNumber() {
+    public boolean isParsedInputANumber() {
         return false;
     }
 
     @Override
-    public Class<?> getClassOfT() {
+    public Class<?> getArgumentClass()
+    {
         return List.class;
     }
 }

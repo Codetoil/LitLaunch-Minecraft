@@ -5,7 +5,7 @@
 package io.github.codetoil.litlaunch.minecraft.commands;
 
 import com.google.common.collect.BiMap;
-import io.github.codetoil.litlaunch.minecraft.commands.arguments.ArgumentType;
+import io.github.codetoil.litlaunch.minecraft.commands.arguments.Argument;
 
 import java.lang.reflect.Method;
 
@@ -23,7 +23,7 @@ public interface ICommand
 	/**
 	 * @return The arguments applied
 	 */
-	BiMap<String, ArgumentType<?>> getArgumentTypes();
+	BiMap<String, Argument<?>> getArgumentTypes();
 
 	/**
 	 *
