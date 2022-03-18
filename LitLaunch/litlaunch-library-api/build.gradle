@@ -1,14 +1,1 @@
-Object litlaunchModApi
-try {
-    litlaunchModApi = project.parent.findProject(":LitLaunch:litlaunch-mod-api")
-} catch (Exception ignore) {}
-try {
-    litlaunchModApi = (litlaunchModApi != null ? litlaunchModApi : project(":..:LitLaunch:litlaunch-mod-api"))
-} catch (Exception ignore) {}
-litlaunchModApi = (litlaunchModApi != null ? litlaunchModApi : project(":litlaunch-mod-api"))
-
 archivesBaseName = litlaunchId + "-library-api"
-
-dependencies {
-    api litlaunchModApi
-}
