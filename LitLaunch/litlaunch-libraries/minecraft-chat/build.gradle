@@ -1,0 +1,9 @@
+Project litlaunchLibrariesApi = toProject(project, ":litlaunch-library-api")
+Project litlaunchMinecraftModule = toProject(project, ":litlaunch-libraries:minecraft-mod-api")
+
+archivesBaseName = litlaunchId + "-minecraft-chat-module"
+
+dependencies {
+    api litlaunchLibrariesApi
+    api litlaunchMinecraftModule
+}
