@@ -10,7 +10,7 @@ public class ArgumentType<T> {
     private final boolean isRequired;
     private final boolean isNumber;
     private IArgumentValue<T> value;
-    private String description = "";
+    private String description;
 
     public ArgumentType(String name, IArgumentParser<? extends IArgumentValue<T>> parser) {
         this(name, parser, name, true);
