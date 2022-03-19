@@ -1,3 +1,64 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net"
+        }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
+        mavenLocal()
+    }
+}
+
+@SuppressWarnings("unused")
+static Project toProject(Object thisProject, String projectName)
+{
+    Project projectObject
+    System.out.println("Find ".concat(projectName))
+    projectObject = thisProject.findProject(":".concat(projectName))
+    System.out.println("1. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":LitLaunch:".concat(projectName))
+    System.out.println("2. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":..:LitLaunch:".concat(projectName))
+    System.out.println("3. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":..:".concat(projectName))
+    System.out.println("4. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("LitLaunch:".concat(projectName))
+    System.out.println("5. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("..:LitLaunch:".concat(projectName))
+    System.out.println("6. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(projectName)
+    System.out.println("7. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("..:".concat(projectName))
+    System.out.println("8. ".concat(projectName))
+    if (projectObject != null) return projectObject
+    throw new UnknownProjectException("Cannot find project ".concat(projectName))
+}
+
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'groovy'
@@ -8,11 +69,12 @@ subprojects {
         extraLibs
     }
 
-    Object subproj = it;
+    Object subproj = it
     dependencies {
-        if (!subproj.name.contains("litlaunch-common") && !subproj.name.contains("litlaunch-api")) {
-            implementation project.parent.findProject(":LitLaunch:litlaunch-common")
-            extraLibs project.parent.findProject(":LitLaunch:litlaunch-common")
+        if (!subproj.name.contains(":minecraft")) {
+            System.out.println(this)
+            implementation toProject(subproj, ":litlaunch-libraries:minecraft")
+            extraLibs toProject(subproj, ":litlaunch-libraries:minecraft")
         }
         configurations.implementation.extendsFrom(configurations.extraLibs)
     }
