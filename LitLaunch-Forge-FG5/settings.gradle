@@ -27,9 +27,39 @@ pluginManagement {
     }
 }
 
-include ':LitLaunch',':LitLaunch:litlaunch-common',':LitLaunch:litlaunch-api',':litlaunch-forge-1.12.2',':litlaunch-forge-1.16.5'
+include ":LitLaunch", ":LitLaunch:litlaunch-library-api",":LitLaunch:litlaunch-libraries:config",
+        ":LitLaunch:litlaunch-libraries:event",":LitLaunch:litlaunch-libraries:minecraft",
+        ":LitLaunch:litlaunch-libraries:minecraft-chat",":LitLaunch:litlaunch-libraries:minecraft-client",
+        ":LitLaunch:litlaunch-libraries:minecraft-command",":LitLaunch:litlaunch-libraries:minecraft-dimension",
+        ":LitLaunch:litlaunch-libraries:minecraft-event",":LitLaunch:litlaunch-libraries:minecraft-server",
+        ":LitLaunch:litlaunch-libraries:minecraft-world",":LitLaunch:litlaunch-libraries:minecraft-mod-api",
+        ":litlaunch-forge-1.12.2",":litlaunch-forge-1.16.5"
 
-project(":LitLaunch:litlaunch-api").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-api").toFile()
-project(":LitLaunch:litlaunch-common").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch/litlaunch-common").toFile()
 project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+project(":LitLaunch:litlaunch-library-api").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries-api").toFile()
+project(":LitLaunch:litlaunch-libraries:config").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/config").toFile()
+project(":LitLaunch:litlaunch-libraries:event").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/event").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-chat").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-chat").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-client").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-client").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-command").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-command").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-dimension").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-dimension").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-event").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-event").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-server").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-server").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-world").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-world").toFile()
+project(":LitLaunch:litlaunch-libraries:minecraft-mod-api").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-libraries/minecraft-mod-api").toFile()
+project(":LitLaunch:litlaunch-library-api").projectDir = rootProject.projectDir.toPath().getParent()
+        .resolve("LitLaunch/litlaunch-library-api").toFile()
 

@@ -32,13 +32,13 @@ static Project toProject(Project thisProject, String projectName)
 {
     Project projectObject
     System.out.println("Find ".concat(projectName))
-    projectObject = thisProject.findProject(":LitLaunch:".concat(projectName))
+    projectObject = thisProject.findProject(":".concat(projectName))
     System.out.println("1. ".concat(projectName))
     if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject(":..:LitLaunch:".concat(projectName))
+    projectObject = thisProject.findProject(":LitLaunch:".concat(projectName))
     System.out.println("2. ".concat(projectName))
     if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject(":".concat(projectName))
+    projectObject = thisProject.findProject(":..:LitLaunch:".concat(projectName))
     System.out.println("3. ".concat(projectName))
     if (projectObject != null) return projectObject
     projectObject = thisProject.findProject(":..:".concat(projectName))
@@ -95,11 +95,11 @@ subprojects {
     targetCompatibility = '1.8'
 
     dependencies {
-        implementation('com.google.code.gson:gson:2.9.+')
-        implementation('com.google.guava:guava:31.+')
-        implementation('net.sf.jopt-simple:jopt-simple:5.+')
-        api('org.apache.logging.log4j:log4j-core:2.17.+')
-        api('org.apache.commons:commons-lang3:3.12.+')
+        api('com.google.code.gson:gson:2.9.0')
+        api('com.google.guava:guava:31.1-jre')
+        api('net.sf.jopt-simple:jopt-simple:5.0.4')
+        api('org.apache.logging.log4j:log4j-core:2.17.2')
+        api('org.apache.commons:commons-lang3:3.12.0')
     }
 
     version = litlaunchVersion
