@@ -3,24 +3,44 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
         maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
             url "https://repo.spring.io/release"
         }
         maven {
+            name "JBoss Repository"
             url "https://repository.jboss.org/maven2"
         }
         maven {
-            name = "forge"
+            name = "Forge Files"
             url = "https://files.minecraftforge.net"
         }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
         }
         maven {
-            name = "mvnrepository"
-            url = "https://repo1.maven.org/maven2"
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
         }
         mavenLocal()
     }

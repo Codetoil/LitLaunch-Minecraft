@@ -1,5 +1,5 @@
-Project litlaunchLibrariesApi = toProject(project, ":litlaunch-library-api")
-Project litlaunchMinecraftModule = toProject(project, ":litlaunch-libraries:minecraft-mod-api")
+Project litlaunchLibrariesApi = toProject(project, "litlaunch-library-api")
+Project litlaunchMinecraftModule = toProject(project, "litlaunch-libraries:minecraft-mod-api")
 
 archivesBaseName = litlaunchId + "-minecraft-dimensions-module"
 

@@ -1,15 +1,17 @@
 # LitLaunch
 This is the source to the LitLaunch ModLoader.
 
-This is a custom abstraction layer I have been working on, it lets the same mod code to run on many different versions of minecraft and in the future other modloaders, for mostly version-independant mods. I have used it for TPSMod.
+This is a custom abstraction layer I have been working on, it lets the same mod code to run on many different versions 
+of minecraft and in the future other modloaders, for mostly version-independent mods. I have used it for TPSMod.
 
-Note: This does not mean that the api does not change, it will and has changed. This just simply means that the mod designed for a LitLaunch version will support all the modloader and minecraft versions the version of LitLaunch supports.
+Note: This does not mean that the api does not change, it will and has changed. This just simply means that the mod
+designed for a LitLaunch version will support all the modloader and minecraft versions the version of LitLaunch supports.
 
-### Installing development enviorment
-Simple! `git clone` the repository!
+### Installing development enviornment
+Simple! Import the repository into IntelliJ, and import `Litlaunch` and
+`LitLaunch-Forge-FG5` into gradle. Nothing else is supported yet. 
 
 ## Pull request format and acceptability
-
 It is up to the creator, Codetoil, on whether a PR gets accepted.
 
 ### Free speech - But keep on topic.

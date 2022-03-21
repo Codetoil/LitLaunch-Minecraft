@@ -3,29 +3,44 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
         maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
             url "https://repo.spring.io/release"
         }
         maven {
+            name "JBoss Repository"
             url "https://repository.jboss.org/maven2"
         }
         maven {
-            name = "forge"
+            name = "Forge Files"
             url = "https://files.minecraftforge.net"
         }
-        maven { url = 'https://maven.minecraftforge.net' }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
         }
         maven {
-            name = "mvnrepository"
-            url = "https://repo1.maven.org/maven2"
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
         }
         mavenLocal()
     }
 }
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'idea'
 
 @SuppressWarnings("unused")
 static Project toProject(Project thisProject, String projectName)
@@ -33,28 +48,10 @@ static Project toProject(Project thisProject, String projectName)
     Project projectObject
     System.out.println("Find ".concat(projectName))
     projectObject = thisProject.findProject(":".concat(projectName))
-    System.out.println("1. ".concat(projectName))
+    System.out.println("1. ".concat(projectObject.toString()))
     if (projectObject != null) return projectObject
     projectObject = thisProject.findProject(":LitLaunch:".concat(projectName))
-    System.out.println("2. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject(":..:LitLaunch:".concat(projectName))
-    System.out.println("3. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject(":..:".concat(projectName))
-    System.out.println("4. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject("LitLaunch:".concat(projectName))
-    System.out.println("5. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject("..:LitLaunch:".concat(projectName))
-    System.out.println("6. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject(projectName)
-    System.out.println("7. ".concat(projectName))
-    if (projectObject != null) return projectObject
-    projectObject = thisProject.findProject("..:".concat(projectName))
-    System.out.println("8. ".concat(projectName))
+    System.out.println("2. ".concat(projectObject.toString()))
     if (projectObject != null) return projectObject
     throw new UnknownProjectException("Cannot find project ".concat(projectName))
 }
@@ -68,25 +65,44 @@ subprojects {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
         maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
             url "https://repo.spring.io/release"
         }
         maven {
+            name "JBoss Repository"
             url "https://repository.jboss.org/maven2"
         }
         maven {
-            name = "forge"
+            name = "Forge Files"
             url = "https://files.minecraftforge.net"
         }
-        maven { url = 'https://maven.minecraftforge.net' }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
         }
         maven {
-            name = "mvnrepository"
-            url = "https://repo1.maven.org/maven2"
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
         }
         mavenLocal()
     }
@@ -95,13 +111,15 @@ subprojects {
     targetCompatibility = '1.8'
 
     dependencies {
-        api('com.google.code.gson:gson:2.9.0')
-        api('com.google.guava:guava:31.1-jre')
-        api('net.sf.jopt-simple:jopt-simple:5.0.4')
-        api('org.apache.logging.log4j:log4j-core:2.17.2')
-        api('org.apache.commons:commons-lang3:3.12.0')
+        compileOnlyApi('com.google.code.gson:gson:2.9.0')
+        compileOnlyApi('com.google.guava:guava:31.1-jre')
+        compileOnlyApi('net.sf.jopt-simple:jopt-simple:5.0.4')
+        compileOnlyApi('org.apache.logging.log4j:log4j-core:2.17.2')
+        compileOnlyApi('org.apache.commons:commons-lang3:3.12.0')
     }
 
     version = litlaunchVersion
     group = litlaunchGroup
 }
+
+jar {}

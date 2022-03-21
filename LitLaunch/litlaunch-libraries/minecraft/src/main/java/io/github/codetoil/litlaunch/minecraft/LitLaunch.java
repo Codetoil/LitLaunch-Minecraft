@@ -10,4 +10,5 @@ import io.github.codetoil.litlaunch.api.event.LitEventHandler;
 public class LitLaunch implements ILibrary
 {
 	public final static LitEventHandler COMMON = new LitEventHandler("Common");
+	public final static String VERSION = "0.0.5+build.0";
 }
