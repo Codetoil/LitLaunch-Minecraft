@@ -1,23 +1,24 @@
 modLoader="javafml"
-loaderVersion="[36]"
+loaderVersion="[33,37)"
+license="LGPL v3.0"
 [[mods]]
 modId="litlaunch"
-version="0.0.4.2"
+version="0.0.5+build.0"
 displayName="Litlaunch"
 authors="Codetoil"
 description='''
-An api to allow you to use the same mod with many different modloaders(e.g. Forge or Fabric(soon)).
- This also allows for different versions of the modloaders. (i.e. the same mod on 1.7.10 and 1.16.5)
+An api to allow you to use the same mod with many different modloaders(e.g. Forge or Fabric).
+It also allows for different versions of minecraft. (i.e. the same mod on 1.12.2 and 1.16.5)
 '''
 [[dependencies.litlaunch]]
 modId="forge"
 mandatory=true
-versionRange="[36]"
+versionRange="[33,37)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.litlaunch]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.16.5]"
+versionRange="[1.16.2,1.17)"
 ordering="NONE"
 side="BOTH"

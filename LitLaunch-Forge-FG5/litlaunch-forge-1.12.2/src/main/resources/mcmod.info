@@ -1,18 +1,18 @@
 [
-  {
-    "modid": "litlaunch",
-    "name": "LitLaunch",
-    "version": "0.0.4.2",
-    "description": "An api to allow you to use the same mod with many different modloaders(e.g. Forge or Fabric(soon)).\n This also allows for different versions of the modloaders. (i.e. the same mod on 1.7.10 and 1.15.2)",
-    "mcversion": "1.12.2",
-    "url": "",
-    "updateUrl": "",
-    "authorList": [
-      "Codetoil"
-    ],
-    "credits": "",
-    "logoFile": "",
-    "screenshots": [],
-    "dependencies": []
-  }
+	{
+		"modid": "litlaunch",
+		"name": "LitLaunch",
+		"version": "0.0.5+build.0",
+		"description": "An api to allow you to use the same mod with many different modloaders(e.g. Forge or Fabric).\n It also allows for different versions of minecraft. (i.e. the same mod on 1.12.2 and 1.16.5)",
+		"mcversion": "[1.12,1.13)",
+		"url": "",
+		"updateUrl": "",
+		"authorList": [
+			"Codetoil"
+		],
+		"credits": "",
+		"logoFile": "",
+		"screenshots": [],
+		"dependencies": []
+	}
 ]

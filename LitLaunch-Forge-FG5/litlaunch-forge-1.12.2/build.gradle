@@ -23,6 +23,17 @@ buildscript {
             name = "mvnrepository"
             url = "https://repo1.maven.org/maven2"
         }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
         mavenLocal()
     }
 
@@ -31,8 +42,6 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-
-archivesBaseName = modBaseName
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -66,6 +75,15 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            getEnvironment().put 'MCP_TO_SRG', projectDir.getAbsolutePath()\
+                    .concat('\\build\\createSrgToMcp\\output.srg')
+            getEnvironment().put 'MOD_CLASSES', 'litlaunch%%'.concat(projectDir.getAbsolutePath())\
+                    .concat('\\build\\resources\\main;litlaunch%%')\
+                .concat(projectDir.getAbsolutePath())\
+                    .concat('\\build\\classes\\java\\main;litlaunch%%')\
+            .concat(projectDir.getAbsolutePath()).concat('\\build\\classes\\groovy\\main')
+            getEnvironment().put 'nativesDirectory', projectDir.getAbsolutePath().concat('\\build\\natives')
 
             if (project.hasProperty("appArgs")) {
                 args Eval.me(appArgs as String)
@@ -106,3 +124,11 @@ Object main = project(":LitLaunch")
 version = main.litlaunchVersion
 group = main.litlaunchGroup
 archivesBaseName = main.litlaunchId + "-forge-1.12.2"
+
+task prepareAssets(type: Copy) {
+    group = 'build'
+    from project.file('src/main/resources')
+    into project.file('build/classes/java/main')
+}
+
+classes.dependsOn(prepareAssets)

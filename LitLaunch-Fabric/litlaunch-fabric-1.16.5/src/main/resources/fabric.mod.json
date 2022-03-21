@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "litlaunch",
+	"version": "0.0.5+build.0",
+	"name": "LitLaunch",
+	"description": "An api to allow you to use the same mod with many different modloaders(e.g. Forge or Fabric).\n It also allows for different versions of minecraft. (i.e. the same mod on 1.12.2 and 1.16.5)",
+	"authors": [
+		"Codetoil"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+
+	"license": "LGPL-3.0",
+	"icon": "assets/litlaunch/icon.png",
+
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"io.github.codetoil.litlaunch.minecraft.fabric1165.LitLaunchFabric1165"
+		]
+	},
+	"mixins": [
+		"litlaunch.mixins.json"
+	],
+
+	"depends": {
+		"fabricloader": ">=0.13.3",
+		"fabric": "*",
+		"minecraft": "1.16.x",
+		"java": ">=8"
+	},
+	"suggests": {
+	},
+	"custom": {
+		"modmenu": {
+			"badges": [ "library" ]
+		}
+	}
+}
