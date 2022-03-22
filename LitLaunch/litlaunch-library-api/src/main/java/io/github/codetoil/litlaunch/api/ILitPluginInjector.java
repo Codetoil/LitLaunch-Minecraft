@@ -4,6 +4,7 @@
 
 package io.github.codetoil.litlaunch.api;
 
-public interface ILibrary extends ILitPlugin
+public interface ILitPluginInjector
 {
+	void injectLitPlugins(ILitPlugin... mods);
 }
