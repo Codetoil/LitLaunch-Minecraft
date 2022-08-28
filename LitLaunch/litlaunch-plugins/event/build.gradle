@@ -1,0 +1,7 @@
+Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
+
+archivesBaseName = litlaunchId + "-event-module"
+
+dependencies {
+    api litlaunchPluginsApi
+}

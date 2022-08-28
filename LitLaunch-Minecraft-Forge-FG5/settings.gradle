@@ -1,0 +1,71 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net"
+        }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+}
+
+include ":LitLaunch",":LitLaunch:litlaunch-plugin-api",":LitLaunch:litlaunch-plugins:minecraft",
+        ":LitLaunch:litlaunch-plugins:event",":litlaunch-forge-1.12.2",":litlaunch-forge-1.16.5",
+        ":LitLaunch:litlaunch-plugins:config",":LitLaunch:litlaunch-plugins:minecraft-mod-api",
+        ":LitLaunch:litlaunch-plugins:minecraft-chat",":LitLaunch:litlaunch-plugins:minecraft-client",
+        ":LitLaunch:litlaunch-plugins:minecraft-command",":LitLaunch:litlaunch-plugins:minecraft-dimension",
+        ":LitLaunch:litlaunch-plugins:minecraft-event",":LitLaunch:litlaunch-plugins:minecraft-server",
+        ":LitLaunch:litlaunch-plugins:minecraft-world",":LitLaunch:litlaunch-plugins:dependency-loader"
+
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+project(":LitLaunch:litlaunch-plugin-api").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugin-api").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft").toFile()
+project(":LitLaunch:litlaunch-plugins:event").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/event").toFile()
+project(":LitLaunch:litlaunch-plugins:config").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/config").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-chat").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-chat").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-client").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-client").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-command").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-command").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-dimension").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-dimension").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-event").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-event").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-server").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-server").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-world").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-world").toFile()
+project(":LitLaunch:litlaunch-plugins:minecraft-mod-api").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/minecraft-mod-api").toFile()
+project(":LitLaunch:litlaunch-plugins:dependency-loader").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/dependency-loader").toFile()

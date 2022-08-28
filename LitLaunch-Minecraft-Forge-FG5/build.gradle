@@ -1,0 +1,145 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net"
+        }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+}
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+@SuppressWarnings("unused")
+static Project toProject(Object thisProject, String projectName)
+{
+    Project projectObject
+    System.out.println("Find ".concat(projectName))
+    projectObject = thisProject.findProject(":".concat(projectName))
+    System.out.println("1. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":LitLaunch:".concat(projectName))
+    System.out.println("2. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":..:LitLaunch:".concat(projectName))
+    System.out.println("3. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(":..:".concat(projectName))
+    System.out.println("4. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("LitLaunch:".concat(projectName))
+    System.out.println("5. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("..:LitLaunch:".concat(projectName))
+    System.out.println("6. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject(projectName)
+    System.out.println("7. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    projectObject = thisProject.findProject("..:".concat(projectName))
+    System.out.println("8. ".concat(projectObject.toString()))
+    if (projectObject != null) return projectObject
+    throw new UnknownProjectException("Cannot find project ".concat(projectName))
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net"
+        }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "mvnrepository"
+            url = "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+
+    configurations {
+        // configuration that holds jars to include in the jar
+        extraLibs
+    }
+
+    Object subproj = it
+
+    dependencies {
+        if (!subproj.path.contains("litlaunch-plugins") && !subproj.path.contains("litlaunch-plugin-api")) {
+            System.out.println("Subproject path: ".concat(subproj.path.toString()))
+            System.out.println("Adding litlaunch modules")
+            implementation toProject(subproj, ":litlaunch-plugins:dependency-loader")
+            implementation toProject(subproj, ":litlaunch-plugins:minecraft")
+            extraLibs toProject(subproj, ":litlaunch-plugins:dependency-loader")
+            extraLibs toProject(subproj, ":litlaunch-plugins:minecraft")
+        }
+        configurations.implementation.extendsFrom(configurations.extraLibs)
+    }
+
+    jar {
+        from {
+            configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+
+    }
+
+}

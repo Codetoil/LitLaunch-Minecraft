@@ -1,0 +1,85 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            name "JBoss Repository"
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "Forge Files"
+            url = "https://files.minecraftforge.net"
+        }
+        maven {
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
+        }
+        maven {
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+}
+
+include ":litlaunch-fabric-1.16.5", ":LitLaunch",":LitLaunch:litlaunch-plugin-api",":LitLaunch:litlaunch-plugins:minecraft",
+        ":LitLaunch:litlaunch-plugins:event",":LitLaunch:litlaunch-plugins:config",
+        ":LitLaunch:litlaunch-plugins:dependency-loader", ":LitLaunch-Minecraft",
+        ":LitLaunch-Minecraft:minecraft-mod-api", ":LitLaunch-Minecraft:minecraft-chat",
+        ":LitLaunch-Minecraft:minecraft-client", ":LitLaunch-Minecraft:minecraft-command",
+        ":LitLaunch-Minecraft:minecraft-dimension", ":LitLaunch-Minecraft:minecraft-event",
+        ":LitLaunch-Minecraft:minecraft-server", ":LitLaunch-Minecraft:minecraft-world",
+
+
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+project(":LitLaunch:litlaunch-plugin-api").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugin-api").toFile()
+project(":LitLaunch:litlaunch-plugins:event").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/event").toFile()
+project(":LitLaunch:litlaunch-plugins:config").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/config").toFile()
+project(":LitLaunch:litlaunch-plugins:dependency-loader").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/dependency-loader").toFile()
+
+project(":LitLaunch-Minecraft").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch-Minecraft")
+        .toFile()
+project(":LitLaunch-Minecraft:minecraft-chat").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-chat").toFile()
+project(":LitLaunch-Minecraft:minecraft-client").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-client").toFile()
+project(":LitLaunch-Minecraft:minecraft-command").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-command").toFile()
+project(":LitLaunch-Minecraft:minecraft-dimension").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-dimension").toFile()
+project(":LitLaunch-Minecraft:minecraft-event").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-event").toFile()
+project(":LitLaunch-Minecraft:minecraft-server").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-server").toFile()
+project(":LitLaunch-Minecraft:minecraft-world").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-world").toFile()
+project(":LitLaunch-Minecraft:minecraft-mod-api").projectDir = project(":LitLaunch-Minecraft").projectDir.toPath()
+        .resolve("minecraft-mod-api").toFile()
