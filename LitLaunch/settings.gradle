@@ -16,14 +16,6 @@ pluginManagement {
             url "https://repository.jboss.org/maven2"
         }
         maven {
-            name = "Forge Files"
-            url = "https://files.minecraftforge.net"
-        }
-        maven {
-            name = "Forge Maven"
-            url "https://maven.minecraftforge.net"
-        }
-        maven {
             name "Sonatype"
             url "https://oss.sonatype.org/content/repositories/snapshots/"
         }
@@ -31,24 +23,9 @@ pluginManagement {
             name "Repo1Maven2"
             url "https://repo1.maven.org/maven2"
         }
-        maven {
-            name 'Fabric'
-            url 'https://maven.fabricmc.net/'
-        }
-        maven {
-            name = "Modrinth"
-            url = "https://api.modrinth.com/maven"
-            content {
-                includeGroup "maven.modrinth"
-            }
-        }
         mavenLocal()
     }
 }
 
-include ":litlaunch-library-api",":litlaunch-libraries:config",":litlaunch-libraries:event",
-        ":litlaunch-libraries:minecraft", ":litlaunch-libraries:minecraft-chat",
-        ":litlaunch-libraries:minecraft-client", ":litlaunch-libraries:minecraft-command",
-        ":litlaunch-libraries:minecraft-dimension", ":litlaunch-libraries:minecraft-event",
-        ":litlaunch-libraries:minecraft-server",":litlaunch-libraries:minecraft-world",
-        ":litlaunch-libraries:minecraft-mod-api"
+include ":litlaunch-plugin-api",":litlaunch-plugins:config",":litlaunch-plugins:event",
+        ":litlaunch-plugins:dependency-loader"

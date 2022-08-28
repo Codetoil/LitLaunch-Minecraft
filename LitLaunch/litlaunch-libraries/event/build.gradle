@@ -1,7 +1,0 @@
-Project litlaunchLibrariesApi = toProject(project, "litlaunch-library-api")
-
-archivesBaseName = litlaunchId + "-event-module"
-
-dependencies {
-    api litlaunchLibrariesApi
-}

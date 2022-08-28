@@ -1,0 +1,63 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            name "JBoss Repository"
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "Forge Files"
+            url = "https://files.minecraftforge.net"
+        }
+        maven {
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
+        }
+        maven {
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+}
+
+include ":LitLaunch", ":LitLaunch:litlaunch-plugin-api", ":LitLaunch:litlaunch-plugins:event",
+        ":LitLaunch:litlaunch-plugins:config", ":LitLaunch:litlaunch-plugins:dependency-loader",
+        ":minecraft", ":minecraft-chat", ":minecraft-client", ":minecraft-command",
+        ":minecraft-dimension", ":minecraft-event", ":minecraft-server",":minecraft-world",
+        ":minecraft-mod-api"
+
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+project(":LitLaunch:litlaunch-plugin-api").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugin-api").toFile()
+project(":LitLaunch:litlaunch-plugins:event").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/event").toFile()
+project(":LitLaunch:litlaunch-plugins:config").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/config").toFile()
+project(":LitLaunch:litlaunch-plugins:dependency-loader").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/dependency-loader").toFile()
