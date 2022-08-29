@@ -27,5 +27,5 @@ pluginManagement {
     }
 }
 
-include ":litlaunch-plugin-api",":litlaunch-plugins:config",":litlaunch-plugins:event",
-        ":litlaunch-plugins:logger", ":litlaunch-plugins:dependencies", ":litlaunch-plugins:dependency-loader"
+include ":litlaunch-library-api",":litlaunch-libraries:config",":litlaunch-libraries:event",
+        ":litlaunch-libraries:logger", ":litlaunch-libraries:dependencies", ":litlaunch-libraries:dependency-loader"

@@ -1,0 +1,18 @@
+Project litlaunchLibraryApi = toProject(project, "litlaunch-library-api")
+Project litlaunchDepenenciesLibrary = toProject(project, "litlaunch-libraries:dependencies")
+
+String version1 = "0.1.0+build.0"
+String archives1 = litlaunchId + "-dependency-loader-library"
+String name1 = 'LitLaunch Dependency Loader Library'
+
+if (this.parent.parent != null && this.parent.parent.publishing.publications.getNames().contains("maven-dependency-loader")) {
+    this.parent.parent.publishing.publications.getByName("maven-dependency-loader").version =
+            version1
+    this.parent.parent.publishing.publications.getByName("maven-dependency-loader").artifactId =
+            archives1
+}
+
+dependencies {
+    api litlaunchLibraryApi
+    api litlaunchDepenenciesLibrary
+}

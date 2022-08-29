@@ -1,0 +1,12 @@
+String name1 = 'LitLaunch Library API'
+String version1 = "0.1.0+build.0"
+String archives1 = litlaunchId + "-library-api"
+
+
+if (this.parent != null && this.parent.publishing.publications.getNames().contains("maven-litlaunch-library-api"))
+{
+    this.parent.publishing.publications.getByName("maven-litlaunch-library-api").version =
+            version1
+    this.parent.publishing.publications.getByName("maven-litlaunch-library-api").artifactId =
+            archives1
+}

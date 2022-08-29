@@ -43,6 +43,9 @@ class ProjectChecker {
         projectObject = this.lookForProjectGivenPrefix(thisProject, "")
         if (projectObject == null) {
             projectObject = this.lookForProjectGivenPrefix(thisProject, "LitLaunch:")
+            if (projectObject == null) {
+                projectObject = this.lookForProjectGivenPrefix(thisProject, "LitLaunch-Minecraft-Plugins:")
+            }
         }
         return projectObject;
     }
@@ -53,7 +56,7 @@ static Project toProject(Object thisProject, String projectName)
 {
     Project projectObject
     System.out.println("Find ".concat(projectName))
-    projectObject = new ProjectChecker(projectName).lookForProject(thisProject)
+     projectObject = new ProjectChecker(projectName).lookForProject(thisProject)
     if (projectObject != null) return projectObject
     throw new UnknownProjectException("Cannot find project ".concat(projectName))
 }
@@ -87,7 +90,8 @@ subprojects.forEach((Project localProject) -> {
     publishing {
         publications {
             if (!localProject.getName().equals("litlaunch-libraries") && !localProject.getName().equals("LitLaunch")
-                && (parent == null))
+                    && !localProject.getParent().getName().equals("litlaunch-libraries") && !localProject.getParent()
+                    .getName().equals("LitLaunch"))
             {
                 create("maven-" + localProject.getName(), MavenPublication) {
                     pom {

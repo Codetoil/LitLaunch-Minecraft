@@ -1,0 +1,20 @@
+Project litlaunchLibraryApi = toProject(project, "litlaunch-library-api")
+Project litlaunchEventModule = toProject(project, "litlaunch-libraries:event")
+Project litlaunchDependenciesModule = toProject(project, "litlaunch-libraries:dependencies")
+Project litlaunchMinecraftModule = toProject(project, "minecraft")
+
+String archives1 = litlaunchId + "-minecraft-mod-api"
+String version1 = "0.1.0+build.0"
+String name1 = 'LitLaunch Minecraft Mod API'
+
+this.rootProject.publishing.publications.getByName("maven-minecraft-mod-api").version =
+        version1
+this.rootProject.publishing.publications.getByName("maven-minecraft-mod-api").artifactId =
+        archives1
+
+dependencies {
+    api litlaunchLibraryApi
+    api litlaunchEventModule
+    api litlaunchDependenciesModule
+    api litlaunchMinecraftModule
+}
