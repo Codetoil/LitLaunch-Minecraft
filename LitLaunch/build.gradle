@@ -49,7 +49,7 @@ class ProjectChecker {
 }
 
 @SuppressWarnings("unused")
-Project toProject(Object thisProject, String projectName)
+static Project toProject(Object thisProject, String projectName)
 {
     Project projectObject
     System.out.println("Find ".concat(projectName))
@@ -58,7 +58,9 @@ Project toProject(Object thisProject, String projectName)
     throw new UnknownProjectException("Cannot find project ".concat(projectName))
 }
 
-subprojects {
+Project parentProject = this.getProject();
+
+subprojects((Project localProject) -> {
     apply plugin: 'java-library'
     apply plugin: 'groovy'
     apply plugin: 'idea'
@@ -76,11 +78,44 @@ subprojects {
         compileOnlyApi('org.apache.commons:commons-lang3:3.12.0')
     }
 
-    version = litlaunchVersion
-    group = litlaunchGroup
-}
+    group = litlaunchGroup + "." + litlaunchId
+    version = localProject.findProperty("version1")
+    archivesBaseName = localProject.findProperty("archive1")
 
-Project parentProject = this.getProject();
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                pom {
+                    groupId = localProject.getGroup()
+                    version = localProject.getVersion()
+                    artifactId = localProject.getName()
+                    name = localProject.findProperty("name1")
+                    licenses {
+                        license {
+                            name = 'GNU Lesser General Public License v3.0 only'
+                            url = 'https://www.gnu.org/licenses/lgpl-3.0-standalone.html'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'codetoil'
+                            name = 'Anthony Michalek'
+                            email = 'ianthisawesomee@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git://github.com/Codetoil/LitLaunch-Source.git'
+                        developerConnection = 'scm:git:ssh://github.com/Codetoil/LitLaunch-Source.git'
+                        url = 'https://github.com/Codetoil/LitLaunch-Source'
+                    }
+
+                    System.out.println(localProject.name)
+                    from localProject.components.java
+                }
+            }
+        }
+    }
+})
 
 allprojects {
     repositories {

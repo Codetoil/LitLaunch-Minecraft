@@ -1,18 +1,24 @@
 /*
  * Copyright (c) Codetoil 2019-2022
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
+ * Contact me on Discord: @Codetoil#7253, or by Email: ianthisawesomee@gmail.com
  */
 
 package io.github.codetoil.litlaunch.minecraft;
 
-import io.github.codetoil.litlaunch.api.EnumSoftwareModRequirementStatus;
-import io.github.codetoil.litlaunch.api.ILitPlugin;
-import io.github.codetoil.litlaunch.api.event.LitEventHandler;
+import io.github.codetoil.litlaunch.dependencies.EnumDependencyRequirement;
+import io.github.codetoil.litlaunch.api.IPlugin;
+import io.github.codetoil.litlaunch.api.event.EventHandler;
 
-public interface IMinecraftMod extends LitEventHandler.ILitEventListener, ILitPlugin
+public interface IMinecraftMod extends EventHandler.IEventListener, IPlugin
 {
-    EnumSoftwareModRequirementStatus onClient();
+    EnumDependencyRequirement onClient();
 
-    EnumSoftwareModRequirementStatus onServer();
+    EnumDependencyRequirement onServer();
 
     String getModID();
 

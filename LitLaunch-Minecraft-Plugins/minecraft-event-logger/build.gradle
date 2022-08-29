@@ -1,0 +1,17 @@
+Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
+Project litlaunchMinecraftModule = toProject(project, "minecraft-mod-api")
+Project litlaunchEventModule = toProject(project, "litlaunch-plugins:event")
+Project litlaunchLoggerModule = toProject(project, "litlaunch-plugins:logger")
+Project litlaunchMinecraftEventModule = toProject(project, "minecraft-event")
+
+archivesBaseName = litlaunchId + "-minecraft-event-logger-library"
+version = "0.1.0+build.0"
+String name1 = 'LitLaunch Minecraft Event Logger Library'
+
+dependencies {
+    api litlaunchPluginsApi
+    api litlaunchMinecraftModule
+    api litlaunchEventModule
+    api litlaunchLoggerModule
+    api litlaunchMinecraftEventModule
+}

@@ -2,7 +2,9 @@ Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
 Project litlaunchMinecraftModule = toProject(project, "minecraft-mod-api")
 Project litlaunchEventModule = toProject(project, "litlaunch-plugins:event")
 
-archivesBaseName = litlaunchId + "-minecraft-event-module"
+archivesBaseName = litlaunchId + "-minecraft-event-library"
+version = "0.1.0+build.0"
+String name = 'LitLaunch Minecraft Event Library';
 
 dependencies {
     api litlaunchPluginsApi

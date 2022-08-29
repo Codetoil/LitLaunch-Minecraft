@@ -1,1 +1,3 @@
-archivesBaseName = litlaunchId + "-plugin-api"
+String name1 = 'LitLaunch Plugin API'
+String version = "0.1.0+build.0"
+String archives1 = litlaunchId + "-plugin-api"

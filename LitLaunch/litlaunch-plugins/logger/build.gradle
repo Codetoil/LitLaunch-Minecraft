@@ -1,0 +1,11 @@
+Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
+Project litlaunchConfigPlugin = toProject(project, "litlaunch-plugins:config")
+
+String version1 = "0.1.0+build.0"
+String archive1 = litlaunchId + "-logger-library"
+String name1 = "LitLaunch Logger Library"
+
+dependencies {
+    api litlaunchPluginsApi
+    api litlaunchConfigPlugin
+}
