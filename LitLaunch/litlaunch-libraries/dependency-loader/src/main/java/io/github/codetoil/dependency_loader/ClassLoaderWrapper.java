@@ -8,7 +8,7 @@
  * Contact me on Discord: @Codetoil#7253, or by Email: ianthisawesomee@gmail.com
  */
 
-package io.github.codetoil.litlaunch.dependencies.dependency_loader;
+package io.github.codetoil.dependency_loader;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
