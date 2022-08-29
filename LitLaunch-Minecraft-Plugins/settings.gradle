@@ -47,10 +47,11 @@ pluginManagement {
 }
 
 include ":LitLaunch", ":LitLaunch:litlaunch-plugin-api", ":LitLaunch:litlaunch-plugins:event",
-        ":LitLaunch:litlaunch-plugins:config", ":LitLaunch:litlaunch-plugins:dependency-loader",
+        ":LitLaunch:litlaunch-plugins:config", ":LitLaunch:litlaunch-plugins:logger",
+        ":LitLaunch:litlaunch-plugins:dependencies", ":LitLaunch:litlaunch-plugins:dependency-loader",
         ":minecraft", ":minecraft-chat", ":minecraft-client", ":minecraft-command",
-        ":minecraft-dimension", ":minecraft-event", ":minecraft-server",":minecraft-world",
-        ":minecraft-mod-api"
+        ":minecraft-dimension", ":minecraft-event", ":minecraft-event-logger", ":minecraft-server",
+        ":minecraft-world", ":minecraft-mod-api"
 
 project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
 project(":LitLaunch:litlaunch-plugin-api").projectDir = project(":LitLaunch").projectDir.toPath()
@@ -59,5 +60,9 @@ project(":LitLaunch:litlaunch-plugins:event").projectDir = project(":LitLaunch")
         .resolve("litlaunch-plugins/event").toFile()
 project(":LitLaunch:litlaunch-plugins:config").projectDir = project(":LitLaunch").projectDir.toPath()
         .resolve("litlaunch-plugins/config").toFile()
+project(":LitLaunch:litlaunch-plugins:logger").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/logger").toFile()
+project(":LitLaunch:litlaunch-plugins:dependencies").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-plugins/dependencies").toFile()
 project(":LitLaunch:litlaunch-plugins:dependency-loader").projectDir = project(":LitLaunch").projectDir.toPath()
         .resolve("litlaunch-plugins/dependency-loader").toFile()

@@ -1,0 +1,9 @@
+Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
+
+String version = "0.1.0+build.0"
+String archives1 = litlaunchId + "-dependencies-library"
+String name1 = 'LitLaunch Dependencies Library'
+
+dependencies {
+    api litlaunchPluginsApi
+}

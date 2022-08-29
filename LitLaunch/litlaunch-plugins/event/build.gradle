@@ -1,6 +1,8 @@
 Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
 
-archivesBaseName = litlaunchId + "-event-module"
+String version1 = "0.1.0+build.0"
+String archives1 = litlaunchId + "-event-library"
+String name1 = 'LitLaunch Event Library'
 
 dependencies {
     api litlaunchPluginsApi

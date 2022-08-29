@@ -1,7 +1,9 @@
 Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
 Project litlaunchMinecraftModule = toProject(project, "minecraft-mod-api")
 
-archivesBaseName = litlaunchId + "-minecraft-dimensions-module"
+archivesBaseName = litlaunchId + "-minecraft-dimensions-library"
+version = "0.1.0+build.0"
+String name1 = 'LitLaunch Minecraft Dimensions Library'
 
 dependencies {
     api litlaunchPluginsApi

@@ -79,7 +79,6 @@ subprojects {
         compileOnlyApi('org.apache.commons:commons-lang3:3.12.0')
     }
 
-    version = litlaunchVersion
     group = litlaunchGroup
 }
 
@@ -120,6 +119,39 @@ allprojects {
         properties {
             name = 'Codetoil'
             year = LocalDate.now().getYear()
+        }
+    }
+
+    Project projectLocal = this.getProject();
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                pom {
+                    groupId = projectLocal.litlaunchGroup + ".litlaunch"
+                    version = projectLocal.version
+                    artifactId = projectLocal.archivesBaseName
+                    name = projectLocal.findProperty("name1")
+                    licenses {
+                        license {
+                            name = 'GNU Lesser General Public License v3.0 only'
+                            url = 'https://www.gnu.org/licenses/lgpl-3.0-standalone.html'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'codetoil'
+                            name = 'Anthony Michalek'
+                            email = 'ianthisawesomee@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git://github.com/Codetoil/LitLaunch-Source.git'
+                        developerConnection = 'scm:git:ssh://github.com/Codetoil/LitLaunch-Source.git'
+                        url = 'https://github.com/Codetoil/LitLaunch-Source'
+                    }
+                }
+            }
         }
     }
 }

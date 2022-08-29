@@ -2,7 +2,9 @@ Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
 Project litlaunchMinecraftModule = toProject(project, "minecraft-mod-api")
 Project litlaunchMinecraftWorldModule = toProject(project, "minecraft-world")
 
-archivesBaseName = litlaunchId + "-minecraft-server-module"
+archivesBaseName = litlaunchId + "-minecraft-server-library"
+version = "0.1.0+build.0"
+String name1 = 'LitLaunch Minecraft Server Library'
 
 dependencies {
     api litlaunchPluginsApi
