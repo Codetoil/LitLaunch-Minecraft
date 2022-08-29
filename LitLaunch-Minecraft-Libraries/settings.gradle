@@ -1,0 +1,68 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven {
+            name "Gradle Plugins"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name "Gradle Plugins"
+            url "https://repo.spring.io/release"
+        }
+        maven {
+            name "JBoss Repository"
+            url "https://repository.jboss.org/maven2"
+        }
+        maven {
+            name = "Forge Files"
+            url = "https://files.minecraftforge.net"
+        }
+        maven {
+            name = "Forge Maven"
+            url "https://maven.minecraftforge.net"
+        }
+        maven {
+            name "Sonatype"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name "Repo1Maven2"
+            url "https://repo1.maven.org/maven2"
+        }
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+        mavenLocal()
+    }
+}
+
+include ":LitLaunch", ":LitLaunch:litlaunch-library-api", ":LitLaunch:litlaunch-libraries:event",
+        ":LitLaunch:litlaunch-libraries:config", ":LitLaunch:litlaunch-libraries:logger",
+        ":LitLaunch:litlaunch-libraries:dependencies", ":LitLaunch:litlaunch-libraries:dependency-loader",
+        ":minecraft", ":minecraft-chat", ":minecraft-client", ":minecraft-command",
+        ":minecraft-dimension", ":minecraft-event", ":minecraft-event-logger", ":minecraft-server",
+        ":minecraft-world", ":minecraft-mod-api"
+
+project(":LitLaunch").projectDir = rootProject.projectDir.toPath().getParent().resolve("LitLaunch").toFile()
+project(":LitLaunch:litlaunch-library-api").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-library-api").toFile()
+project(":LitLaunch:litlaunch-libraries:event").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-libraries/event").toFile()
+project(":LitLaunch:litlaunch-libraries:config").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-libraries/config").toFile()
+project(":LitLaunch:litlaunch-libraries:logger").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-libraries/logger").toFile()
+project(":LitLaunch:litlaunch-libraries:dependencies").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-libraries/dependencies").toFile()
+project(":LitLaunch:litlaunch-libraries:dependency-loader").projectDir = project(":LitLaunch").projectDir.toPath()
+        .resolve("litlaunch-libraries/dependency-loader").toFile()

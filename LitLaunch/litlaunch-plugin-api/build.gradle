@@ -1,8 +1,0 @@
-String name1 = 'LitLaunch Plugin API'
-String version1 = "0.1.0+build.0"
-String archives1 = litlaunchId + "-plugin-api"
-
-this.project.parent.publishing.publications.getByName("maven-litlaunch-plugin-api").version =
-        version1
-this.project.parent.publishing.publications.getByName("maven-litlaunch-plugin-api").artifactId =
-        archives1
