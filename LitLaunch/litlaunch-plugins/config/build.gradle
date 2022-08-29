@@ -1,8 +1,13 @@
 Project litlaunchPluginsApi = toProject(project, "litlaunch-plugin-api")
 
-String version = "0.1.0+build.0"
+String version1 = "0.1.0+build.0"
 String archives1 = litlaunchId + "-config-library"
 String name1 = 'LitLaunch Config Library'
+
+this.project.parent.parent.publishing.publications.getByName("maven-config").version =
+        version1
+this.project.parent.parent.publishing.publications.getByName("maven-config").artifactId =
+        archives1
 
 dependencies {
     api litlaunchPluginsApi

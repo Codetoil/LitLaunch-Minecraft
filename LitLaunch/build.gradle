@@ -78,39 +78,42 @@ subprojects((Project localProject) -> {
         compileOnlyApi('org.apache.commons:commons-lang3:3.12.0')
     }
 
-    group = litlaunchGroup + "." + litlaunchId
-    version = localProject.findProperty("version1")
-    archivesBaseName = localProject.findProperty("archive1")
+    localProject.group = parentProject.litlaunchGroup + "." + parentProject.litlaunchId
+    localProject.version = localProject.findProperty("version1")
+    localProject.archivesBaseName = localProject.findProperty("archive1")
+})
 
+subprojects.forEach((Project localProject) -> {
     publishing {
         publications {
-            mavenJava(MavenPublication) {
-                pom {
-                    groupId = localProject.getGroup()
-                    version = localProject.getVersion()
-                    artifactId = localProject.getName()
-                    name = localProject.findProperty("name1")
-                    licenses {
-                        license {
-                            name = 'GNU Lesser General Public License v3.0 only'
-                            url = 'https://www.gnu.org/licenses/lgpl-3.0-standalone.html'
+            if (!localProject.getName().equals("litlaunch-plugins") && !localProject.getName().equals("LitLaunch"))
+            {
+                create("maven-" + localProject.getName(), MavenPublication) {
+                    pom {
+                        groupId = parentProject.litlaunchGroup + "." + parentProject.litlaunchId
+                        version = ""
+                        artifactId = ""
+                        licenses {
+                            license {
+                                name = 'GNU Lesser General Public License v3.0 only'
+                                url = 'https://www.gnu.org/licenses/lgpl-3.0-standalone.html'
+                            }
                         }
-                    }
-                    developers {
-                        developer {
-                            id = 'codetoil'
-                            name = 'Anthony Michalek'
-                            email = 'ianthisawesomee@gmail.com'
+                        developers {
+                            developer {
+                                id = 'codetoil'
+                                name = 'Anthony Michalek'
+                                email = 'ianthisawesomee@gmail.com'
+                            }
                         }
-                    }
-                    scm {
-                        connection = 'scm:git:git://github.com/Codetoil/LitLaunch-Source.git'
-                        developerConnection = 'scm:git:ssh://github.com/Codetoil/LitLaunch-Source.git'
-                        url = 'https://github.com/Codetoil/LitLaunch-Source'
-                    }
+                        scm {
+                            connection = 'scm:git:git://github.com/Codetoil/LitLaunch-Source.git'
+                            developerConnection = 'scm:git:ssh://github.com/Codetoil/LitLaunch-Source.git'
+                            url = 'https://github.com/Codetoil/LitLaunch-Source'
+                        }
 
-                    System.out.println(localProject.name)
-                    from localProject.components.java
+                        from localProject.components.java
+                    }
                 }
             }
         }
