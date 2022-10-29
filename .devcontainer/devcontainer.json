@@ -5,5 +5,12 @@
       "version": "none",
       "installGradle": true
     }
+  },
+  "settings": {
+    "java.import.gradle.java.home": "/usr/lib/jvm/msopenjdk-current",
+    "gradle.nestedProjects": true
+  },
+  "containerEnv": {
+    "JAVA_HOME": "/usr/lib/jvm/msopenjdk-current"
   }
 }
