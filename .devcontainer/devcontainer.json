@@ -1,11 +1,9 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/java:1",
+  "image": "mcr.microsoft.com/devcontainers/java:17",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
-      "jdkDistro": "open",
+      "version": "none",
       "installGradle": true
-    },
-    "ghcr.io/devcontainers/features/git:1": {}
+    }
   }
 }
