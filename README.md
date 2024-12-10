@@ -1,8 +1,12 @@
+### NOTE:
+Only one of the branches so far have been cleaned. If you need the source code for something not currently in the repo, contact me on Discord below.
+
+
 # LitLaunch Source
 This is the source to the LitLaunch ModLoader, and the TPSMod.
 v1.2 of TPSMod is included on a seperate branch and in the tpsmodsrc-1.2/main folder. 
 
-### TODO add .gitignore-s so that I don't have to wait so long.
+### TODO add .gitignores so that I don't accidentally include confidential information.
 
 ## Installing development enviorment
 Simple `git clone` the repo!
